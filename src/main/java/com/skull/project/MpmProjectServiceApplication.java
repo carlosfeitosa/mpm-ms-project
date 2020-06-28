@@ -1,36 +1,33 @@
 package com.skull.project;
 
-import java.util.UUID;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.skull.project.model.Project;
-import com.skull.project.model.repository.ProjectRepository;
+import com.skull.project.controller.ProjectController;
+import com.skull.project.controller.impl.ProjectControllerImpl;
 
+/**
+ * Microservice main class.
+ * 
+ * @author Carlos Feitosa (carlos.feitosa.nt@gmail.com)
+ * @since 2020-06-28
+ *
+ */
 @SpringBootApplication
 public class MpmProjectServiceApplication {
 
 	@Autowired
-	private ProjectRepository service;
+	private ProjectController controller;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MpmProjectServiceApplication.class, args);
 	}
 
 	@PostConstruct
-	private void initDb() {
-		for (int i = 1; i <= 10; i++) {
-			Project project = new Project();
-			
-			project.setName(String.format("Mocked project #%d", i));
-			project.setDescription(String.format("Mocked description #%d", i));
-			project.setCreatedBy(UUID.randomUUID());
-
-			service.save(project);
-		}
+	private void init() {
+		((ProjectControllerImpl) controller).initMockDb();
 	}
 }
