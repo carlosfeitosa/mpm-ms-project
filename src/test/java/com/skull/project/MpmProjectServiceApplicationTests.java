@@ -20,7 +20,7 @@ class MpmProjectServiceApplicationTests {
 	 */
 	@Test
 	@DisplayName("Test if context can load")
-	void ifContextLoads() {
+	void testIfContextLoads() {
 		assertThat(controller).isNotNull();
 	}
 
