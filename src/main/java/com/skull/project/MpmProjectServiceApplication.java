@@ -23,11 +23,13 @@ public class MpmProjectServiceApplication {
 	private ProjectController controller;
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(MpmProjectServiceApplication.class, args);
 	}
 
 	@PostConstruct
 	private void init() {
+
 		((ProjectControllerImpl) controller).initMockDb();
 	}
 }

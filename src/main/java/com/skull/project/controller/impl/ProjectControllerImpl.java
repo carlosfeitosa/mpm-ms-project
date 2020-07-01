@@ -35,6 +35,7 @@ public class ProjectControllerImpl implements ProjectController {
 	@Override
 	@GetMapping
 	public List<Project> getAll() {
+
 		return repo.findAll();
 	}
 
@@ -55,6 +56,7 @@ public class ProjectControllerImpl implements ProjectController {
 	 * Init database with 10 mocked projects.
 	 */
 	public void initMockDb() {
+
 		for (int i = 1; i <= 10; i++) {
 			Project project = new Project();
 
