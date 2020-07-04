@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,14 +28,16 @@ class ProjectControllerImplTest {
 	}
 
 	@Test
-	void testGetAll() {
+	@DisplayName("Test if controller can get all elements")
+	void testIfCanGetAll() {
 		List<Project> projectList = controller.getAll();
 
 		assertThat(projectList.size()).isGreaterThan(0);
 	}
 
 	@Test
-	void testGetById() {
+	@DisplayName("Test if controller can get by id")
+	void testIfCanGetById() {
 		List<Project> projectList = controller.getAll();
 
 		for (Project project : projectList) {
