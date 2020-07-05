@@ -3,6 +3,9 @@ package com.skull.project.controller.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -19,6 +22,9 @@ import com.skull.project.dto.ProjectDto;
 class ProjectControllerImplTest {
 
 	private static final String TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION = "Project not available for id";
+	private static final String TEST_PROJECT_NAME = "Test project";
+	private static final String TEST_PROJECT_DESCRIPTION = "Test description";
+	private static final String TEST_PROJECT_CLIENT_NAME = "Test client name";
 
 	@Autowired
 	private ProjectController controller;
@@ -60,6 +66,25 @@ class ProjectControllerImplTest {
 		String actualMessage = exception.getMessage();
 
 		assertThat(actualMessage).contains(TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION);
+	}
+
+	@Test
+	@DisplayName("Test if controller can save a new project")
+	void testIfCanCreateAProject() {
+
+		ProjectDto projectDto = new ProjectDto();
+
+		projectDto.setName(TEST_PROJECT_NAME);
+		projectDto.setClientId(UUID.randomUUID());
+		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
+		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
+		projectDto.setStartDate(new Date());
+		projectDto.setEndDate(
+				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+		ProjectDto createdProject = controller.newItem(projectDto);
+
+		assertThat(createdProject.getId()).isNotNull();
 	}
 
 }

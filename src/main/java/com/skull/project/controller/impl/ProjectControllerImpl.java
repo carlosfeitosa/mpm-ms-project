@@ -1,5 +1,6 @@
 package com.skull.project.controller.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -58,6 +59,9 @@ public class ProjectControllerImpl implements ProjectController {
 	public ProjectDto newItem(@RequestBody ProjectDto projectDto) {
 
 		Project project = convertToEntity(projectDto);
+
+		applyMaintenanceData(project);
+
 		Project projectCreated = repo.save(project);
 
 		return convertToDto(projectCreated);
@@ -90,7 +94,7 @@ public class ProjectControllerImpl implements ProjectController {
 	}
 
 	/**
-	 * Convert dto to entity
+	 * Convert dto to entity.
 	 * 
 	 * @param projectDto dto
 	 * 
@@ -99,6 +103,27 @@ public class ProjectControllerImpl implements ProjectController {
 	private Project convertToEntity(ProjectDto projectDto) {
 
 		return modelMapper.map(projectDto, Project.class);
+	}
+
+	/**
+	 * Apply maintenance data to project entity.
+	 * 
+	 * TODO apply looged user
+	 * 
+	 * @param project to apply maintenance data
+	 */
+	private void applyMaintenanceData(Project project) {
+
+		UUID loggedUser = UUID.randomUUID();
+
+		if (null == project.getId()) {
+
+			project.setCreatedBy(loggedUser);
+		} else {
+
+			project.setModifiedBy(loggedUser);
+			project.setModifiedDate(new Date());
+		}
 	}
 
 }

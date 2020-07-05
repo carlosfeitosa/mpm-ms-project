@@ -27,11 +27,11 @@ public interface ProjectController {
 	/**
 	 * Default route (save a new project)
 	 * 
-	 * @param project project to save
+	 * @param projectDto project to save
 	 * 
 	 * @return saved project
 	 */
-	public ProjectDto newItem(@RequestBody ProjectDto project);
+	public ProjectDto newItem(@RequestBody ProjectDto projectDto);
 
 	/**
 	 * Return project by id.
