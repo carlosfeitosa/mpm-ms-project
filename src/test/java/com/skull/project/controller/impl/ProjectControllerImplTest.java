@@ -10,22 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import com.skull.project.controller.ProjectController;
 import com.skull.project.model.Project;
 
-@SpringBootTest
+@SpringBootTest(properties = { "service.preload.database=true" })
 class ProjectControllerImplTest {
 
 	@Autowired
 	private ProjectController controller;
-
-	@BeforeTestClass
-	void setupTest() {
-
-		((ProjectControllerImpl) controller).initMockDb();
-	}
 
 	@Test
 	@DisplayName("Test if controller can get all elements")

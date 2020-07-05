@@ -17,9 +17,8 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ProjectControllerImplWebTest {
 
-	private static final String TEST_DEFAULT_ENDPOINT = "/api/projects";
-
-	private String endpoint;
+	@Value("${service.request.mapping}")
+	private String requestMapping;
 
 	@Value("${server.servlet.context-path}")
 	private String contextPath;
@@ -30,9 +29,11 @@ class ProjectControllerImplWebTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	private String endpoint;
+
 	@BeforeEach
 	void setupTest() {
-		endpoint = String.format("http://localhost:%d/%s/%s", port, contextPath, TEST_DEFAULT_ENDPOINT);
+		endpoint = String.format("http://localhost:%d/%s/%s", port, contextPath, requestMapping);
 	}
 
 	@Test

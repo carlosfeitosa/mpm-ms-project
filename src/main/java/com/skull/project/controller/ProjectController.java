@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.skull.project.model.Project;
 
@@ -20,9 +21,18 @@ public interface ProjectController {
 	/**
 	 * Default route (list all projects).
 	 * 
-	 * @return
+	 * @return list of all projects
 	 */
 	List<Project> getAll();
+
+	/**
+	 * Default route (save a new project)
+	 * 
+	 * @param project project to save
+	 * 
+	 * @return saved project
+	 */
+	public Project newProject(@RequestBody Project project);
 
 	/**
 	 * Return project by id.

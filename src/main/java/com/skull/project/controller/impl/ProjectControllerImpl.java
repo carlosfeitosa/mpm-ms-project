@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@RequestMapping("api/projects")
+@RequestMapping("${service.request.mapping}")
 @Slf4j
 public class ProjectControllerImpl implements ProjectController {
 
@@ -37,6 +39,13 @@ public class ProjectControllerImpl implements ProjectController {
 	public List<Project> getAll() {
 
 		return repo.findAll();
+	}
+
+	@Override
+	@PostMapping
+	public Project newProject(@RequestBody Project project) {
+
+		return repo.save(project);
 	}
 
 	@Override
@@ -52,19 +61,4 @@ public class ProjectControllerImpl implements ProjectController {
 		return ResponseEntity.ok().body(project);
 	}
 
-	/**
-	 * Init database with 10 mocked projects.
-	 */
-	public void initMockDb() {
-
-		for (int i = 1; i <= 10; i++) {
-			Project project = new Project();
-
-			project.setName(String.format("Mocked project #%d", i));
-			project.setDescription(String.format("Mocked description #%d", i));
-			project.setCreatedBy(UUID.randomUUID());
-
-			repo.save(project);
-		}
-	}
 }
