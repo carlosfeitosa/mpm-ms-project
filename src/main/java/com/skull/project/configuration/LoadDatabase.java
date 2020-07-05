@@ -1,4 +1,4 @@
-package com.skull.project;
+package com.skull.project.configuration;
 
 import java.util.UUID;
 
@@ -12,6 +12,13 @@ import com.skull.project.model.repository.ProjectRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Loads mocked database.
+ * 
+ * @author Carlos Feitosa (carlos.feitosa.nt@gmail.com)
+ * @since 2020-07-05
+ *
+ */
 @Configuration
 @Slf4j
 public class LoadDatabase {

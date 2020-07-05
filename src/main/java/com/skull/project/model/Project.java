@@ -27,7 +27,7 @@ import lombok.ToString;
  *
  */
 @NoArgsConstructor
-@ToString(exclude = "id")
+@ToString
 @Entity(name = "project")
 public class Project {
 

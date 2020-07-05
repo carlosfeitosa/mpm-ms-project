@@ -1,21 +1,24 @@
 package com.skull.project.controller.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import com.skull.project.controller.ProjectController;
-import com.skull.project.model.Project;
+import com.skull.project.dto.ProjectDto;
 
 @SpringBootTest(properties = { "service.preload.database=true" })
 class ProjectControllerImplTest {
+
+	private static final String TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION = "Project not available for id";
 
 	@Autowired
 	private ProjectController controller;
@@ -23,22 +26,40 @@ class ProjectControllerImplTest {
 	@Test
 	@DisplayName("Test if controller can get all elements")
 	void testIfCanGetAll() {
-		List<Project> projectList = controller.getAll();
+
+		List<ProjectDto> projectList = controller.getAll();
 
 		assertThat(projectList.size()).isGreaterThan(0);
 	}
 
 	@Test
-	@DisplayName("Test if controller can get by id")
+	@DisplayName("Test if controller can get item by id")
 	void testIfCanGetById() {
-		List<Project> projectList = controller.getAll();
 
-		for (Project project : projectList) {
-			ResponseEntity<Project> foundProject = controller.getById(project.getId());
+		List<ProjectDto> projectList = controller.getAll();
 
-			assertThat(foundProject.getStatusCode()).isEqualTo(HttpStatus.OK);
-			assertThat(foundProject.getBody().getId()).isEqualTo(project.getId());
+		for (ProjectDto project : projectList) {
+
+			ProjectDto foundProject = controller.getById(project.getId());
+
+			assertThat(foundProject.getId()).isEqualTo(project.getId());
 		}
+	}
+
+	@Test
+	@DisplayName("Test if controller throws exception trying to get item by invalid id")
+	void testIfThrowsExceptionCanGetByInvalidId() {
+
+		UUID invalidProjectId = UUID.randomUUID();
+
+		Exception exception = assertThrows(NoSuchElementException.class, () -> {
+
+			controller.getById(invalidProjectId);
+		});
+
+		String actualMessage = exception.getMessage();
+
+		assertThat(actualMessage).contains(TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION);
 	}
 
 }

@@ -3,11 +3,10 @@ package com.skull.project.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.skull.project.model.Project;
+import com.skull.project.dto.ProjectDto;
 
 /**
  * Intarface for project controller.
@@ -23,7 +22,7 @@ public interface ProjectController {
 	 * 
 	 * @return list of all projects
 	 */
-	List<Project> getAll();
+	List<ProjectDto> getAll();
 
 	/**
 	 * Default route (save a new project)
@@ -32,7 +31,7 @@ public interface ProjectController {
 	 * 
 	 * @return saved project
 	 */
-	public Project newProject(@RequestBody Project project);
+	public ProjectDto newItem(@RequestBody ProjectDto project);
 
 	/**
 	 * Return project by id.
@@ -41,5 +40,5 @@ public interface ProjectController {
 	 * 
 	 * @return project by id
 	 */
-	ResponseEntity<Project> getById(@PathVariable(value = "id") UUID projectId);
+	ProjectDto getById(@PathVariable(value = "id") UUID projectId);
 }

@@ -2,7 +2,6 @@ package com.skull.project.model.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -83,7 +82,7 @@ class ProjectRepositoryTest {
 
 		String actualMessage = exception.getMessage();
 
-		assertTrue(actualMessage.contains(TEST_PROJECT_SAVE_EXCEPTION_MESSAGE));
+		assertThat(actualMessage).contains(TEST_PROJECT_SAVE_EXCEPTION_MESSAGE);
 	}
 
 	@Test
@@ -97,7 +96,7 @@ class ProjectRepositoryTest {
 
 		String actualMessage = exception.getMessage();
 
-		assertTrue(actualMessage.contains(TEST_PROJECT_NULL_NAME_EXCEPTION));
+		assertThat(actualMessage).contains(TEST_PROJECT_NULL_NAME_EXCEPTION);
 	}
 
 	@Test
