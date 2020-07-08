@@ -41,4 +41,21 @@ public interface ProjectController {
 	 * @return project by id
 	 */
 	ProjectDto getById(@PathVariable(value = "id") UUID projectId);
+
+	/**
+	 * Update a project.
+	 * 
+	 * @param projectDto project dto
+	 * @param projectId  project id
+	 * 
+	 * @return updated project
+	 */
+	ProjectDto updateItem(@RequestBody ProjectDto projectDto, @PathVariable(value = "id") UUID projectId);
+
+	/**
+	 * Delete a project.
+	 * 
+	 * @param projectId project id
+	 */
+	void deleteItem(@PathVariable(value = "id") UUID projectId);
 }

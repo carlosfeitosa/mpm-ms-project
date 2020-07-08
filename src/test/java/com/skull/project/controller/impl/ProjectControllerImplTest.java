@@ -82,9 +82,115 @@ class ProjectControllerImplTest {
 		projectDto.setEndDate(
 				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
-		ProjectDto createdProject = controller.newItem(projectDto);
+		ProjectDto createdProjectDto = controller.newItem(projectDto);
 
-		assertThat(createdProject.getId()).isNotNull();
+		assertThat(createdProjectDto.getId()).isNotNull();
 	}
 
+	@Test
+	@DisplayName("Test if controller can update a project")
+	void testIfCanUpdateAProject() {
+
+		ProjectDto projectDto = new ProjectDto();
+
+		projectDto.setName(TEST_PROJECT_NAME);
+		projectDto.setClientId(UUID.randomUUID());
+		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
+		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
+		projectDto.setStartDate(new Date());
+		projectDto.setEndDate(
+				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+		ProjectDto createdProjectDto = controller.newItem(projectDto);
+
+		assertThat(createdProjectDto.getId()).isNotNull();
+
+		UUID newClientId = UUID.randomUUID();
+
+		createdProjectDto.setClientId(newClientId);
+
+		ProjectDto updatedProject = controller.updateItem(createdProjectDto, createdProjectDto.getId());
+
+		assertThat(updatedProject.getClientId()).isEqualTo(newClientId);
+	}
+
+	@Test
+	@DisplayName("Test if controller throws exception trying to update a project id")
+	void testIfUpdateAProjectIdThrowsException() {
+
+		ProjectDto projectDto = new ProjectDto();
+
+		projectDto.setName(TEST_PROJECT_NAME);
+		projectDto.setClientId(UUID.randomUUID());
+		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
+		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
+		projectDto.setStartDate(new Date());
+		projectDto.setEndDate(
+				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+		ProjectDto createdProjectDto = controller.newItem(projectDto);
+
+		assertThat(createdProjectDto.getId()).isNotNull();
+
+		UUID newProjectId = UUID.randomUUID();
+
+		createdProjectDto.setId(newProjectId);
+
+		Exception exception = assertThrows(NoSuchElementException.class, () -> {
+
+			controller.updateItem(createdProjectDto, newProjectId);
+		});
+
+		String actualMessage = exception.getMessage();
+
+		assertThat(actualMessage).contains(TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION);
+	}
+
+	@Test
+	@DisplayName("Test if controller can delete a project")
+	void testIfCanDeleteAProject() {
+
+		ProjectDto projectDto = new ProjectDto();
+
+		projectDto.setName(TEST_PROJECT_NAME);
+		projectDto.setClientId(UUID.randomUUID());
+		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
+		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
+		projectDto.setStartDate(new Date());
+		projectDto.setEndDate(
+				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+		ProjectDto createdProjectDto = controller.newItem(projectDto);
+
+		assertThat(createdProjectDto.getId()).isNotNull();
+
+		UUID projectId = createdProjectDto.getId();
+
+		controller.deleteItem(projectId);
+
+		Exception exception = assertThrows(NoSuchElementException.class, () -> {
+
+			controller.getById(projectId);
+		});
+
+		String actualMessage = exception.getMessage();
+
+		assertThat(actualMessage).contains(TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION);
+
+	}
+
+	@Test
+	@DisplayName("Test if controller can throw an exception trying to delete an invalid project")
+	void testIfThrowExceptionTryingToDeleteAnInvalidProject() {
+
+		Exception exception = assertThrows(NoSuchElementException.class, () -> {
+
+			controller.getById(UUID.randomUUID());
+		});
+
+		String actualMessage = exception.getMessage();
+
+		assertThat(actualMessage).contains(TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION);
+
+	}
 }
