@@ -40,6 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProjectControllerImpl implements ProjectController {
 
+	private static final String PROJECT_NOT_AVAILABLE_FOR_ID = "Project not available for id: ";
+
 	@Autowired
 	private ProjectRepository repo;
 
@@ -82,7 +84,7 @@ public class ProjectControllerImpl implements ProjectController {
 		log.debug(String.format("Project id: %s", String.valueOf(projectId)));
 
 		Project project = repo.findById(projectId)
-				.orElseThrow(() -> new NoSuchElementException("Project not available for id: " + projectId));
+				.orElseThrow(() -> new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId));
 
 		return convertToDto(project);
 	}
@@ -102,7 +104,7 @@ public class ProjectControllerImpl implements ProjectController {
 			return convertToDto(repo.save(updateProjectFromDto(optProject.get(), projectDto)));
 		} else {
 
-			throw new NoSuchElementException("Project not available for id: " + projectId);
+			throw new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId);
 		}
 	}
 
@@ -144,12 +146,12 @@ public class ProjectControllerImpl implements ProjectController {
 	}
 
 	/**
-	 * Updates a project's entity by it's dto
+	 * Updates a project's entity by it's dto.
 	 * 
 	 * @param project    project entity
 	 * @param projectDto project dto
 	 * 
-	 * @return updated prpject entity
+	 * @return updated project entity
 	 */
 	private Project updateProjectFromDto(Project project, ProjectDto projectDto) {
 		project.setName(projectDto.getName());

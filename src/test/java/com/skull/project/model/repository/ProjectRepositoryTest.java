@@ -117,4 +117,12 @@ class ProjectRepositoryTest {
 		assertThat(createdProject.getId()).isEqualTo(project.getId());
 	}
 
+	@Test
+	@DisplayName("Test if an exception is not throwed if find by is passed wrong id")
+	void testIfCanFindByWrongId() {
+
+		Optional<Project> foundProject = repo.findById(UUID.randomUUID());
+
+		assertThat(foundProject.isPresent()).isFalse();
+	}
 }
