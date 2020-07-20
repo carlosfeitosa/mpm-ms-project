@@ -114,7 +114,14 @@ public class ProjectControllerImpl implements ProjectController {
 
 		log.info("Deleting project");
 
-		repo.deleteById(projectId);
+		try {
+
+			repo.deleteById(projectId);
+		} catch (Exception e) {
+
+			throw new NoSuchElementException(
+					PROJECT_NOT_AVAILABLE_FOR_ID + projectId + System.lineSeparator() + e.getMessage());
+		}
 	}
 
 	/**
@@ -154,6 +161,7 @@ public class ProjectControllerImpl implements ProjectController {
 	 * @return updated project entity
 	 */
 	private Project updateProjectFromDto(Project project, ProjectDto projectDto) {
+
 		project.setName(projectDto.getName());
 		project.setDescription(projectDto.getDescription());
 		project.setClientId(projectDto.getClientId());

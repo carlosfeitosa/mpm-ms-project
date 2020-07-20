@@ -31,7 +31,7 @@ class ProjectControllerImplTest {
 
 	@Test
 	@DisplayName("Test if controller can get all elements")
-	void testIfCanGetAll() {
+	void testIfCanGetAllProjects() {
 
 		List<ProjectDto> projectList = controller.getAll();
 
@@ -40,7 +40,7 @@ class ProjectControllerImplTest {
 
 	@Test
 	@DisplayName("Test if controller can get item by id")
-	void testIfCanGetById() {
+	void testIfCanGetProjectById() {
 
 		List<ProjectDto> projectList = controller.getAll();
 
@@ -54,7 +54,7 @@ class ProjectControllerImplTest {
 
 	@Test
 	@DisplayName("Test if controller throws exception trying to get item by invalid id")
-	void testIfThrowsExceptionCanGetByInvalidId() {
+	void testIfThrowsExceptionTryingGetProjectByInvalidId() {
 
 		UUID invalidProjectId = UUID.randomUUID();
 
@@ -183,9 +183,11 @@ class ProjectControllerImplTest {
 	@DisplayName("Test if controller can throw an exception trying to delete an invalid project")
 	void testIfThrowExceptionTryingToDeleteAnInvalidProject() {
 
+		UUID projectId = UUID.randomUUID();
+
 		Exception exception = assertThrows(NoSuchElementException.class, () -> {
 
-			controller.getById(UUID.randomUUID());
+			controller.getById(projectId);
 		});
 
 		String actualMessage = exception.getMessage();
