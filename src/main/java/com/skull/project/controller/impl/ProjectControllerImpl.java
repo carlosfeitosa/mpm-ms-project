@@ -101,7 +101,11 @@ public class ProjectControllerImpl implements ProjectController {
 
 		if (optProject.isPresent()) {
 
-			return convertToDto(repo.save(updateProjectFromDto(optProject.get(), projectDto)));
+			Project project = optProject.get();
+
+			applyMaintenanceData(project);
+
+			return convertToDto(repo.save(updateProjectFromDto(project, projectDto)));
 		} else {
 
 			throw new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId);
