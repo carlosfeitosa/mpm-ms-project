@@ -21,6 +21,8 @@ import com.skull.project.model.Project;
 @SpringBootTest
 class ProjectRepositoryTest {
 
+	private static final String TEST_PROJECT_CODE = "00001234";
+	private static final String TEST_CLIENT_PROJECT_CODE = "AAA-00001234";
 	private static final String TEST_PROJECT_NAME = "Test project";
 	private static final String TEST_PROJECT_DESCRIPTION = "Test description";
 	private static final String TEST_PROJECT_CLIENT_NAME = "Test client name";
@@ -55,7 +57,9 @@ class ProjectRepositoryTest {
 	@DisplayName("Test if project can be saved with all project information")
 	void testIfCanSaveMaximumProjectInformation() {
 
+		project.setClientProjectCode(TEST_PROJECT_CODE);
 		project.setName(TEST_PROJECT_NAME);
+		project.setClientProjectCode(TEST_CLIENT_PROJECT_CODE);
 		project.setClientId(UUID.randomUUID());
 		project.setClientName(TEST_PROJECT_CLIENT_NAME);
 		project.setStartDate(new Date());

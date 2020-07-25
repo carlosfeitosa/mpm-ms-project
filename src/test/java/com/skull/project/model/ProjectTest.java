@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ProjectTest {
 
+	private static final String TEST_PROJECT_CODE = "00001234";
+	private static final String TEST_CLIENT_PROJECT_CODE = "AAA-00001234";
 	private static final String TEST_PROJECT_NAME = "Test project";
 	private static final String TEST_PROJECT_DESCRIPTION = "Test description";
 	private static final String TEST_PROJECT_CLIENT_NAME = "Test client name";
@@ -39,7 +41,9 @@ class ProjectTest {
 				.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		Date modifiedDate = new Date();
 
+		project.setCode(TEST_PROJECT_CODE);
 		project.setName(TEST_PROJECT_NAME);
+		project.setClientProjectCode(TEST_CLIENT_PROJECT_CODE);
 		project.setClientId(clientId);
 		project.setClientName(TEST_PROJECT_CLIENT_NAME);
 		project.setStartDate(startDate);
@@ -51,7 +55,9 @@ class ProjectTest {
 
 		String projectToString = project.toString();
 
+		assertThat(projectToString.contains(TEST_PROJECT_CODE)).isTrue();
 		assertThat(projectToString.contains(TEST_PROJECT_NAME)).isTrue();
+		assertThat(projectToString.contains(TEST_CLIENT_PROJECT_CODE)).isTrue();
 		assertThat(projectToString.contains(clientId.toString())).isTrue();
 		assertThat(projectToString.contains(TEST_PROJECT_CLIENT_NAME)).isTrue();
 		assertThat(projectToString.contains(startDate.toString())).isTrue();

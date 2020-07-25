@@ -20,6 +20,11 @@ public class ProjectDto {
 	private UUID id;
 
 	/**
+	 * Project code.
+	 */
+	private String code;
+
+	/**
 	 * Project name.
 	 */
 	private String name;
@@ -43,6 +48,11 @@ public class ProjectDto {
 	 * Project client's name.
 	 */
 	private String clientName;
+
+	/**
+	 * Project client's project code.
+	 */
+	private String clientProjectCode;
 
 	/**
 	 * Project's description.
