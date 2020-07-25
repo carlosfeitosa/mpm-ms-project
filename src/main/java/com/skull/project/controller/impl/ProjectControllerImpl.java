@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skull.project.controller.ProjectController;
+import com.skull.project.converter.ProjectConverter;
 import com.skull.project.dto.ProjectDto;
 import com.skull.project.model.Project;
 import com.skull.project.model.repository.ProjectRepository;
@@ -46,7 +46,7 @@ public class ProjectControllerImpl implements ProjectController {
 	private ProjectRepository repo;
 
 	@Autowired
-	private ModelMapper modelMapper;
+	private ProjectConverter converter;
 
 	@Override
 	@GetMapping
@@ -54,7 +54,7 @@ public class ProjectControllerImpl implements ProjectController {
 
 		List<Project> result = repo.findAll();
 
-		return result.stream().map(this::convertToDto).collect(Collectors.toList());
+		return result.stream().map(converter::convertFromEntity).collect(Collectors.toList());
 	}
 
 	@Override
@@ -66,13 +66,13 @@ public class ProjectControllerImpl implements ProjectController {
 		log.info("Creating new item");
 		log.debug(String.format("Project name: %s", projectDto.getName()));
 
-		Project project = convertToEntity(projectDto);
+		Project project = converter.convertFromDto(projectDto);
 
 		applyMaintenanceData(project);
 
 		Project projectCreated = repo.save(project);
 
-		return convertToDto(projectCreated);
+		return converter.convertFromEntity(projectCreated);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class ProjectControllerImpl implements ProjectController {
 		Project project = repo.findById(projectId)
 				.orElseThrow(() -> new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId));
 
-		return convertToDto(project);
+		return converter.convertFromEntity(project);
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class ProjectControllerImpl implements ProjectController {
 
 			applyMaintenanceData(project);
 
-			return convertToDto(repo.save(updateProjectFromDto(project, projectDto)));
+			return converter.convertFromEntity(repo.save(converter.convertFromDto(projectDto, project)));
 		} else {
 
 			throw new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId);
@@ -126,54 +126,6 @@ public class ProjectControllerImpl implements ProjectController {
 			throw new NoSuchElementException(
 					PROJECT_NOT_AVAILABLE_FOR_ID + projectId + System.lineSeparator() + e.getMessage());
 		}
-	}
-
-	/**
-	 * Convert entity to dto.
-	 * 
-	 * @param project entity
-	 * 
-	 * @return dto
-	 */
-	private ProjectDto convertToDto(Project project) {
-
-		log.info("Converting to dto");
-
-		return modelMapper.map(project, ProjectDto.class);
-	}
-
-	/**
-	 * Convert dto to entity.
-	 * 
-	 * @param projectDto dto
-	 * 
-	 * @return entity
-	 */
-	private Project convertToEntity(ProjectDto projectDto) {
-
-		log.info("Converting to entity");
-
-		return modelMapper.map(projectDto, Project.class);
-	}
-
-	/**
-	 * Updates a project's entity by it's dto.
-	 * 
-	 * @param project    project entity
-	 * @param projectDto project dto
-	 * 
-	 * @return updated project entity
-	 */
-	private Project updateProjectFromDto(Project project, ProjectDto projectDto) {
-
-		project.setName(projectDto.getName());
-		project.setDescription(projectDto.getDescription());
-		project.setClientId(projectDto.getClientId());
-		project.setClientName(projectDto.getClientName());
-		project.setStartDate(projectDto.getStartDate());
-		project.setEndDate(projectDto.getEndDate());
-
-		return project;
 	}
 
 	/**

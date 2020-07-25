@@ -42,6 +42,14 @@ public class Project {
 	private UUID id;
 
 	/**
+	 * Project code.
+	 */
+	@Column(name = "code", nullable = true, length = 50)
+	@Getter
+	@Setter
+	private String code;
+
+	/**
 	 * Project name.
 	 */
 	@NonNull
@@ -83,6 +91,14 @@ public class Project {
 	@Getter
 	@Setter
 	private String clientName;
+
+	/**
+	 * Project client's project code.
+	 */
+	@Column(name = "client_project_code", nullable = true, length = 50)
+	@Getter
+	@Setter
+	private String clientProjectCode;
 
 	/**
 	 * Project's description.
