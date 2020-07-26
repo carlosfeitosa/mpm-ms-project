@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.skull.project.enums.ProjectType;
 import com.skull.project.model.Project;
 import com.skull.project.model.repository.ProjectRepository;
 
@@ -37,6 +38,13 @@ public class LoadDatabase {
 
 					project.setName(String.format("Mocked project #%d", i));
 					project.setDescription(String.format("Mocked description #%d", i));
+
+					if (0 == (i % 2)) {
+						project.setType(ProjectType.INTERNAL_PROJECT);
+					} else {
+						project.setType(ProjectType.TIME_AND_MATERIAL_ALLOCATION);
+					}
+
 					project.setCreatedBy(UUID.randomUUID());
 
 					repository.save(project);

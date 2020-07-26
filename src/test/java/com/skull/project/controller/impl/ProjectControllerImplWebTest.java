@@ -3,8 +3,6 @@ package com.skull.project.controller.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
 
@@ -123,8 +121,7 @@ class ProjectControllerImplWebTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);
@@ -147,8 +144,7 @@ class ProjectControllerImplWebTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);
@@ -182,8 +178,7 @@ class ProjectControllerImplWebTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);
@@ -215,8 +210,7 @@ class ProjectControllerImplWebTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);

@@ -3,8 +3,6 @@ package com.skull.project.controller.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -79,8 +77,7 @@ class ProjectControllerImplTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ProjectDto createdProjectDto = controller.newItem(projectDto);
 
@@ -98,8 +95,7 @@ class ProjectControllerImplTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ProjectDto createdProjectDto = controller.newItem(projectDto);
 
@@ -125,8 +121,7 @@ class ProjectControllerImplTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ProjectDto createdProjectDto = controller.newItem(projectDto);
 
@@ -157,8 +152,7 @@ class ProjectControllerImplTest {
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
 		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
 		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		projectDto.setEndDate(new Date());
 
 		ProjectDto createdProjectDto = controller.newItem(projectDto);
 
