@@ -3,6 +3,10 @@ package com.skull.project.dto;
 import java.util.Date;
 import java.util.UUID;
 
+import com.skull.project.enums.ProjectHealth;
+import com.skull.project.enums.ProjectStatus;
+import com.skull.project.enums.ProjectType;
+
 import lombok.Data;
 
 /**
@@ -40,6 +44,16 @@ public class ProjectDto {
 	private Date endDate;
 
 	/**
+	 * Project real start.
+	 */
+	private Date realStartDate;
+
+	/**
+	 * Project new end date.
+	 */
+	private Date newEndDate;
+
+	/**
 	 * Project client's id.
 	 */
 	private UUID clientId;
@@ -58,5 +72,35 @@ public class ProjectDto {
 	 * Project's description.
 	 */
 	private String description;
+
+	/**
+	 * Project's total contracted hours.
+	 */
+	private Long totalContractedHours;
+
+	/**
+	 * Project's attention points.
+	 */
+	private String attentionPoints;
+
+	/**
+	 * Project's action plan.
+	 */
+	private String actionPlan;
+
+	/**
+	 * Project's type.
+	 */
+	private ProjectType type;
+
+	/**
+	 * Project's status.
+	 */
+	private ProjectStatus status;
+
+	/**
+	 * Project's health.
+	 */
+	private ProjectHealth health;
 
 }

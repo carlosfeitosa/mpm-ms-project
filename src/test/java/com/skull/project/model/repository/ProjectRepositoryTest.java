@@ -3,8 +3,6 @@ package com.skull.project.model.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.skull.project.enums.ProjectHealth;
+import com.skull.project.enums.ProjectStatus;
+import com.skull.project.enums.ProjectType;
 import com.skull.project.model.Project;
 
 @SpringBootTest
@@ -26,6 +27,12 @@ class ProjectRepositoryTest {
 	private static final String TEST_PROJECT_NAME = "Test project";
 	private static final String TEST_PROJECT_DESCRIPTION = "Test description";
 	private static final String TEST_PROJECT_CLIENT_NAME = "Test client name";
+	private static final Long TEST_PROJECT_TOTAL_CONTRACTED_HOURS = 100000L;
+	private static final String TEST_PROJECT_ATTENTION_POINTS = "No attention points for now";
+	private static final String TEST_PROJECT_ACTION_PLAN = "Let's do it!";
+	private static final ProjectType TEST_PROJECT_TYPE = ProjectType.INTERNAL_PROJECT;
+	private static final ProjectStatus TEST_PROJECT_STATUS = ProjectStatus.ON_HOLD;
+	private static final ProjectHealth TEST_PROJECT_HEALTH = ProjectHealth.ALERT;
 	private static final String TEST_PROJECT_SAVE_EXCEPTION_MESSAGE = "not-null property references a null or transient value";
 	private static final String TEST_PROJECT_NULL_NAME_EXCEPTION = "name is marked non-null but is null";
 
@@ -63,9 +70,16 @@ class ProjectRepositoryTest {
 		project.setClientId(UUID.randomUUID());
 		project.setClientName(TEST_PROJECT_CLIENT_NAME);
 		project.setStartDate(new Date());
-		project.setEndDate(
-				Date.from((LocalDate.now().plusMonths(1)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		project.setEndDate(new Date());
+		project.setRealStartDate(new Date());
+		project.setNewEndDate(new Date());
 		project.setDescription(TEST_PROJECT_DESCRIPTION);
+		project.setTotalContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
+		project.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
+		project.setActionPlan(TEST_PROJECT_ACTION_PLAN);
+		project.setType(TEST_PROJECT_TYPE);
+		project.setStatus(TEST_PROJECT_STATUS);
+		project.setHealth(TEST_PROJECT_HEALTH);
 		project.setCreatedBy(UUID.randomUUID());
 		project.setModifiedBy(UUID.randomUUID());
 		project.setModifiedDate(new Date());
