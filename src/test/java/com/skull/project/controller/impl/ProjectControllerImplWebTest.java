@@ -75,7 +75,7 @@ class ProjectControllerImplWebTest {
 
 		ProjectDto[] recoveredProjects = om.readValue(response.getBody(), ProjectDto[].class);
 
-		assertThat(recoveredProjects.length).isGreaterThan(0);
+		assertThat(recoveredProjects).isNotEmpty();
 	}
 
 	@Test
@@ -88,7 +88,7 @@ class ProjectControllerImplWebTest {
 
 		ProjectDto[] recoveredProjects = om.readValue(response.getBody(), ProjectDto[].class);
 
-		assertThat(recoveredProjects.length).isGreaterThan(0);
+		assertThat(recoveredProjects).isNotEmpty();
 
 		ProjectDto project = recoveredProjects[0];
 		String expected = om.writeValueAsString(recoveredProjects[0]);
