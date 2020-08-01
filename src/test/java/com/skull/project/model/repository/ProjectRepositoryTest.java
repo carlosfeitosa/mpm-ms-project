@@ -33,7 +33,7 @@ class ProjectRepositoryTest {
 	private static final ProjectType TEST_PROJECT_TYPE = ProjectType.INTERNAL_PROJECT;
 	private static final ProjectStatus TEST_PROJECT_STATUS = ProjectStatus.ON_HOLD;
 	private static final ProjectHealth TEST_PROJECT_HEALTH = ProjectHealth.ALERT;
-	private static final String TEST_PROJECT_SAVE_EXCEPTION_MESSAGE = "not-null property references a null or transient value";
+	private static final String TEST_PROJECT_SAVE_EXCEPTION_MESSAGE = "could not execute statement; SQL [n/a]; constraint [null];";
 	private static final String TEST_PROJECT_NULL_NAME_EXCEPTION = "name is marked non-null but is null";
 
 	@Autowired

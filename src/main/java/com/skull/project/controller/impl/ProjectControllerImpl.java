@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +51,8 @@ public class ProjectControllerImpl implements ProjectController {
 	@GetMapping
 	public List<ProjectDto> getAll() {
 
+		log.info("Getting all itens");
+
 		List<Project> result = repo.findAll();
 
 		return result.stream().map(converter::convertFromEntity).collect(Collectors.toList());
@@ -60,7 +61,6 @@ public class ProjectControllerImpl implements ProjectController {
 	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	@ResponseBody
 	public ProjectDto newItem(@RequestBody ProjectDto projectDto) {
 
 		log.info("Creating new item");
@@ -77,7 +77,6 @@ public class ProjectControllerImpl implements ProjectController {
 
 	@Override
 	@GetMapping("/{id}")
-	@ResponseBody
 	public ProjectDto getById(@PathVariable(value = "id") UUID projectId) {
 
 		log.info("Getting project by id");
@@ -91,7 +90,6 @@ public class ProjectControllerImpl implements ProjectController {
 
 	@Override
 	@PutMapping("/{id}")
-	@ResponseBody
 	public ProjectDto updateItem(ProjectDto projectDto, UUID projectId) {
 
 		log.info("Updating project");
