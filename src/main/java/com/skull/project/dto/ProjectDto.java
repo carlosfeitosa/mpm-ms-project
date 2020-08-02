@@ -3,11 +3,14 @@ package com.skull.project.dto;
 import java.util.Date;
 import java.util.UUID;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.skull.project.enums.ProjectHealth;
 import com.skull.project.enums.ProjectStatus;
 import com.skull.project.enums.ProjectType;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * DTO for project model.
@@ -17,7 +20,8 @@ import lombok.Data;
  *
  */
 @Data
-public class ProjectDto {
+@EqualsAndHashCode(callSuper = false)
+public class ProjectDto extends RepresentationModel<ProjectDto> {
 	/**
 	 * Project identifier.
 	 */

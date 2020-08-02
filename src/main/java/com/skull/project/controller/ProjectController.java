@@ -1,8 +1,8 @@
 package com.skull.project.controller;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -22,7 +22,7 @@ public interface ProjectController {
 	 * 
 	 * @return list of all projects
 	 */
-	List<ProjectDto> getAll();
+	CollectionModel<ProjectDto> getAll();
 
 	/**
 	 * Default route (save a new project)

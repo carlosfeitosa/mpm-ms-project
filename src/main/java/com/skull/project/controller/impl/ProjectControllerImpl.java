@@ -1,5 +1,7 @@
 package com.skull.project.controller.impl;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -8,6 +10,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +46,9 @@ public class ProjectControllerImpl implements ProjectController {
 
 	private static final String PROJECT_NOT_AVAILABLE_FOR_ID = "Project not available for id: ";
 
+	@Value("${service.request.mapping}")
+	String controllerRequestMapping;
+
 	@Autowired
 	private ProjectRepository repo;
 
@@ -49,13 +57,26 @@ public class ProjectControllerImpl implements ProjectController {
 
 	@Override
 	@GetMapping
-	public List<ProjectDto> getAll() {
+	public CollectionModel<ProjectDto> getAll() {
 
 		log.info("Getting all itens");
 
 		List<Project> result = repo.findAll();
 
-		return result.stream().map(converter::convertFromEntity).collect(Collectors.toList());
+		List<ProjectDto> projects = result.stream().map(converter::convertFromEntity).collect(Collectors.toList());
+
+		for (ProjectDto project : projects) {
+			String projectId = project.getId().toString();
+
+			Link selfLink = linkTo(ProjectController.class).slash(controllerRequestMapping).slash(projectId)
+					.withSelfRel();
+
+			project.add(selfLink);
+		}
+
+		Link selfLink = linkTo(ProjectController.class).slash(controllerRequestMapping).withSelfRel();
+
+		return CollectionModel.of(projects, selfLink);
 	}
 
 	@Override

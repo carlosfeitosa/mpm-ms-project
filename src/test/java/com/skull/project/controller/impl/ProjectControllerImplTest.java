@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Date;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.CollectionModel;
 
 import com.skull.project.controller.ProjectController;
 import com.skull.project.dto.ProjectDto;
@@ -31,16 +31,16 @@ class ProjectControllerImplTest {
 	@DisplayName("Test if controller can get all elements")
 	void testIfCanGetAllProjects() {
 
-		List<ProjectDto> projectList = controller.getAll();
+		CollectionModel<ProjectDto> projectList = controller.getAll();
 
-		assertThat(projectList.size()).isGreaterThan(0);
+		assertThat(projectList).isNotEmpty();
 	}
 
 	@Test
 	@DisplayName("Test if controller can get item by id")
 	void testIfCanGetProjectById() {
 
-		List<ProjectDto> projectList = controller.getAll();
+		CollectionModel<ProjectDto> projectList = controller.getAll();
 
 		for (ProjectDto project : projectList) {
 
