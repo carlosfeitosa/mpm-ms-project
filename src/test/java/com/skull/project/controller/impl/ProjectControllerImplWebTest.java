@@ -3,6 +3,8 @@ package com.skull.project.controller.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,22 +12,24 @@ import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skull.project.dto.ProjectDto;
+import com.skull.project.dto.response.ResponseProjectList;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = { "service.preload.database=true" })
 class ProjectControllerImplWebTest {
@@ -67,38 +71,43 @@ class ProjectControllerImplWebTest {
 
 	@Test
 	@DisplayName("Test if service can get all elements")
-	void testIfCanGetAll() throws JsonProcessingException, JSONException {
+	void testIfCanGetAll() throws JsonProcessingException, JSONException, RestClientException, URISyntaxException {
 
 		ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 
-		ProjectDto[] recoveredProjects = om.readValue(response.getBody(), ProjectDto[].class);
+		ResponseProjectList recoveredProjects = restTemplate.exchange(new URI(endpoint), HttpMethod.GET, null,
+				new ParameterizedTypeReference<ResponseProjectList>() {
+				}).getBody();
 
-		assertThat(recoveredProjects).isNotEmpty();
+		assertThat(recoveredProjects.getEmbedded().getProjectDtoList()).isNotEmpty();
 	}
 
 	@Test
 	@DisplayName("Test if service can get item by id")
-	void testIfCanGetById() throws JsonProcessingException, JSONException {
+	void testIfCanGetById() throws JsonProcessingException, JSONException, RestClientException, URISyntaxException {
 
 		ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 
-		ProjectDto[] recoveredProjects = om.readValue(response.getBody(), ProjectDto[].class);
+		ResponseProjectList recoveredProjects = restTemplate.exchange(new URI(endpoint), HttpMethod.GET, null,
+				new ParameterizedTypeReference<ResponseProjectList>() {
+				}).getBody();
 
-		assertThat(recoveredProjects).isNotEmpty();
+		assertThat(recoveredProjects.getEmbedded().getProjectDtoList()).isNotEmpty();
 
-		ProjectDto project = recoveredProjects[0];
-		String expected = om.writeValueAsString(recoveredProjects[0]);
+		ProjectDto expected = recoveredProjects.getEmbedded().getProjectDtoList().get(0);
 
-		response = restTemplate.getForEntity(String.format("%s/%s", endpoint, project.getId().toString()),
+		response = restTemplate.getForEntity(String.format("%s/%s", endpoint, expected.getId().toString()),
 				String.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 
-		JSONAssert.assertEquals(expected, response.getBody(), false);
+		ProjectDto recoveredProject = om.readValue(response.getBody(), ProjectDto.class);
+
+		assertEquals(expected, recoveredProject);
 	}
 
 	@Test

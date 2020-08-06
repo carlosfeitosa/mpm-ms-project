@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 
 import com.skull.project.controller.ProjectController;
 import com.skull.project.dto.ProjectDto;
@@ -44,9 +45,9 @@ class ProjectControllerImplTest {
 
 		for (ProjectDto project : projectList) {
 
-			ProjectDto foundProject = controller.getById(project.getId());
+			EntityModel<ProjectDto> foundProject = controller.getById(project.getId());
 
-			assertThat(foundProject.getId()).isEqualTo(project.getId());
+			assertThat(foundProject.getContent().getId()).isEqualTo(project.getId());
 		}
 	}
 
@@ -79,9 +80,9 @@ class ProjectControllerImplTest {
 		projectDto.setStartDate(new Date());
 		projectDto.setEndDate(new Date());
 
-		ProjectDto createdProjectDto = controller.newItem(projectDto);
+		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 
-		assertThat(createdProjectDto.getId()).isNotNull();
+		assertThat(createdProjectDto.getContent().getId()).isNotNull();
 	}
 
 	@Test
@@ -97,17 +98,18 @@ class ProjectControllerImplTest {
 		projectDto.setStartDate(new Date());
 		projectDto.setEndDate(new Date());
 
-		ProjectDto createdProjectDto = controller.newItem(projectDto);
+		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 
-		assertThat(createdProjectDto.getId()).isNotNull();
+		assertThat(createdProjectDto.getContent().getId()).isNotNull();
 
 		UUID newClientId = UUID.randomUUID();
 
-		createdProjectDto.setClientId(newClientId);
+		createdProjectDto.getContent().setClientId(newClientId);
 
-		ProjectDto updatedProject = controller.updateItem(createdProjectDto, createdProjectDto.getId());
+		EntityModel<ProjectDto> updatedProject = controller.updateItem(createdProjectDto.getContent(),
+				createdProjectDto.getContent().getId());
 
-		assertThat(updatedProject.getClientId()).isEqualTo(newClientId);
+		assertThat(updatedProject.getContent().getClientId()).isEqualTo(newClientId);
 	}
 
 	@Test
@@ -123,17 +125,17 @@ class ProjectControllerImplTest {
 		projectDto.setStartDate(new Date());
 		projectDto.setEndDate(new Date());
 
-		ProjectDto createdProjectDto = controller.newItem(projectDto);
+		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 
-		assertThat(createdProjectDto.getId()).isNotNull();
+		assertThat(createdProjectDto.getContent().getId()).isNotNull();
 
 		UUID newProjectId = UUID.randomUUID();
 
-		createdProjectDto.setId(newProjectId);
+		createdProjectDto.getContent().setId(newProjectId);
 
 		Exception exception = assertThrows(NoSuchElementException.class, () -> {
 
-			controller.updateItem(createdProjectDto, newProjectId);
+			controller.updateItem(createdProjectDto.getContent(), newProjectId);
 		});
 
 		String actualMessage = exception.getMessage();
@@ -154,11 +156,11 @@ class ProjectControllerImplTest {
 		projectDto.setStartDate(new Date());
 		projectDto.setEndDate(new Date());
 
-		ProjectDto createdProjectDto = controller.newItem(projectDto);
+		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 
-		assertThat(createdProjectDto.getId()).isNotNull();
+		assertThat(createdProjectDto.getContent().getId()).isNotNull();
 
-		UUID projectId = createdProjectDto.getId();
+		UUID projectId = createdProjectDto.getContent().getId();
 
 		controller.deleteItem(projectId);
 

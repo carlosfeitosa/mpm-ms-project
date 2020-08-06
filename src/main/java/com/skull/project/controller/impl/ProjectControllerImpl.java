@@ -12,7 +12,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ProjectControllerImpl implements ProjectController {
 
 	private static final String PROJECT_NOT_AVAILABLE_FOR_ID = "Project not available for id: ";
+	private static final String PROJECT_LINK_REF = "repo";
 
 	@Value("${service.request.mapping}")
 	String controllerRequestMapping;
@@ -66,23 +69,17 @@ public class ProjectControllerImpl implements ProjectController {
 		List<ProjectDto> projects = result.stream().map(converter::convertFromEntity).collect(Collectors.toList());
 
 		for (ProjectDto project : projects) {
-			String projectId = project.getId().toString();
 
-			Link selfLink = linkTo(ProjectController.class).slash(controllerRequestMapping).slash(projectId)
-					.withSelfRel();
-
-			project.add(selfLink);
+			project.add(getLink(project.getId(), null));
 		}
 
-		Link selfLink = linkTo(ProjectController.class).slash(controllerRequestMapping).withSelfRel();
-
-		return CollectionModel.of(projects, selfLink);
+		return CollectionModel.of(projects, getLink(null, null));
 	}
 
 	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ProjectDto newItem(@RequestBody ProjectDto projectDto) {
+	public EntityModel<ProjectDto> newItem(@RequestBody ProjectDto projectDto) {
 
 		log.info("Creating new item");
 		log.debug(String.format("Project name: %s", projectDto.getName()));
@@ -93,12 +90,16 @@ public class ProjectControllerImpl implements ProjectController {
 
 		Project projectCreated = repo.save(project);
 
-		return converter.convertFromEntity(projectCreated);
+		ProjectDto result = converter.convertFromEntity(projectCreated);
+		result.add(getLink(result.getId(), null));
+		result.add(getLink(null, PROJECT_LINK_REF));
+
+		return EntityModel.of(result);
 	}
 
 	@Override
 	@GetMapping("/{id}")
-	public ProjectDto getById(@PathVariable(value = "id") UUID projectId) {
+	public EntityModel<ProjectDto> getById(@PathVariable(value = "id") UUID projectId) {
 
 		log.info("Getting project by id");
 		log.debug(String.format("Project id: %s", String.valueOf(projectId)));
@@ -106,12 +107,16 @@ public class ProjectControllerImpl implements ProjectController {
 		Project project = repo.findById(projectId)
 				.orElseThrow(() -> new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId));
 
-		return converter.convertFromEntity(project);
+		ProjectDto result = converter.convertFromEntity(project);
+		result.add(getLink(result.getId(), null));
+		result.add(getLink(null, PROJECT_LINK_REF));
+
+		return EntityModel.of(result);
 	}
 
 	@Override
 	@PutMapping("/{id}")
-	public ProjectDto updateItem(ProjectDto projectDto, UUID projectId) {
+	public EntityModel<ProjectDto> updateItem(ProjectDto projectDto, UUID projectId) {
 
 		log.info("Updating project");
 		log.debug(String.format("Project id: %s", String.valueOf(projectId)));
@@ -124,7 +129,11 @@ public class ProjectControllerImpl implements ProjectController {
 
 			applyMaintenanceData(project);
 
-			return converter.convertFromEntity(repo.save(converter.convertFromDto(projectDto, project)));
+			ProjectDto result = converter.convertFromEntity(repo.save(converter.convertFromDto(projectDto, project)));
+			result.add(getLink(result.getId(), null));
+			result.add(getLink(null, PROJECT_LINK_REF));
+
+			return EntityModel.of(result);
 		} else {
 
 			throw new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId);
@@ -168,6 +177,35 @@ public class ProjectControllerImpl implements ProjectController {
 			project.setModifiedBy(loggedUser);
 			project.setModifiedDate(new Date());
 		}
+	}
+
+	/**
+	 * Return link for controller.
+	 * 
+	 * @param id  project identification. If null, link will be to controller
+	 *            default method.
+	 * @param ref link reference. If null, link ref will be self
+	 * 
+	 * @return link to controller method
+	 */
+	private Link getLink(UUID id, String ref) {
+		WebMvcLinkBuilder linkBuilder = linkTo(ProjectController.class).slash(controllerRequestMapping);
+
+		log.info("Generating link for project");
+
+		if (null != id) {
+
+			log.debug(String.format("Genereting link for project #%s", id.toString()));
+
+			linkBuilder = linkBuilder.slash(id.toString());
+		}
+
+		if (ref != null) {
+
+			return linkBuilder.withRel(ref);
+		}
+
+		return linkBuilder.withSelfRel();
 	}
 
 }

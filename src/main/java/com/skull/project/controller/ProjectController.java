@@ -3,6 +3,7 @@ package com.skull.project.controller;
 import java.util.UUID;
 
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,7 +32,7 @@ public interface ProjectController {
 	 * 
 	 * @return saved project
 	 */
-	public ProjectDto newItem(@RequestBody ProjectDto projectDto);
+	EntityModel<ProjectDto> newItem(@RequestBody ProjectDto projectDto);
 
 	/**
 	 * Return project by id.
@@ -40,7 +41,7 @@ public interface ProjectController {
 	 * 
 	 * @return project by id
 	 */
-	ProjectDto getById(@PathVariable(value = "id") UUID projectId);
+	EntityModel<ProjectDto> getById(@PathVariable(value = "id") UUID projectId);
 
 	/**
 	 * Update a project.
@@ -50,7 +51,7 @@ public interface ProjectController {
 	 * 
 	 * @return updated project
 	 */
-	ProjectDto updateItem(@RequestBody ProjectDto projectDto, @PathVariable(value = "id") UUID projectId);
+	EntityModel<ProjectDto> updateItem(@RequestBody ProjectDto projectDto, @PathVariable(value = "id") UUID projectId);
 
 	/**
 	 * Delete a project.
