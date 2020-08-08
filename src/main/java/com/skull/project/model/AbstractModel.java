@@ -13,6 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Abstract entity model.
@@ -22,6 +23,7 @@ import lombok.Setter;
  *
  */
 @MappedSuperclass
+@ToString
 public abstract class AbstractModel { // NOPMD by skull on 8/8/20, 11:32 AM
 
 	/**

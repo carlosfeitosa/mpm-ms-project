@@ -26,7 +26,7 @@ import lombok.ToString;
  *
  */
 @NoArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Entity(name = "project")
 public class Project extends AbstractModel {
 
