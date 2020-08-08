@@ -3,14 +3,15 @@ package com.skull.project.model;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -45,7 +46,7 @@ public class Project {
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	@Column(name = "id", updatable = false, nullable = false)
 	@Getter
-	private UUID id;
+	private UUID id; // NOPMD by skull on 8/8/20, 10:11 AM
 
 	/**
 	 * Project code.
@@ -65,40 +66,13 @@ public class Project {
 	private String name;
 
 	/**
-	 * Project start date.
+	 * Project's dates.
 	 */
-	@Temporal(value = TemporalType.DATE)
-	@Column(name = "start_date", nullable = true)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "project_dates_id", referencedColumnName = "id")
 	@Getter
 	@Setter
-	private Date startDate;
-
-	/**
-	 * Project end date.
-	 */
-	@Temporal(value = TemporalType.DATE)
-	@Column(name = "end_date", nullable = true)
-	@Getter
-	@Setter
-	private Date endDate;
-
-	/**
-	 * Project real start.
-	 */
-	@Temporal(value = TemporalType.DATE)
-	@Column(name = "real_start_date", nullable = true)
-	@Getter
-	@Setter
-	private Date realStartDate;
-
-	/**
-	 * Project new end date.
-	 */
-	@Temporal(value = TemporalType.DATE)
-	@Column(name = "new_end_date", nullable = true)
-	@Getter
-	@Setter
-	private Date newEndDate;
+	private ProjectDates dates;
 
 	/**
 	 * Project client's id.
@@ -138,7 +112,7 @@ public class Project {
 	@Column(name = "total_contracted_hours", nullable = true)
 	@Getter
 	@Setter
-	private Long totalContractedHours;
+	private Long contractedHours;
 
 	/**
 	 * Project's attention points.
@@ -183,23 +157,33 @@ public class Project {
 	@Setter
 	private ProjectHealth health;
 
+	/**
+	 * User that created this project.
+	 */
 	@Column(name = "created_by", nullable = false)
 	@Getter
 	@Setter
 	private UUID createdBy;
 
+	/**
+	 * Timestamp of project creation.
+	 */
 	@CreationTimestamp
-	@Temporal(value = TemporalType.TIMESTAMP)
 	@Column(name = "created_date", nullable = false)
 	@Getter
 	private Date createdDate;
 
+	/**
+	 * User that modified this project.
+	 */
 	@Column(name = "modified_by")
 	@Getter
 	@Setter
 	private UUID modifiedBy;
 
-	@Temporal(value = TemporalType.TIMESTAMP)
+	/**
+	 * Timestamp of project modification.
+	 */
 	@Column(name = "modified_date")
 	@Getter
 	@Setter

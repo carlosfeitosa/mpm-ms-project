@@ -18,6 +18,7 @@ import com.skull.project.enums.ProjectHealth;
 import com.skull.project.enums.ProjectStatus;
 import com.skull.project.enums.ProjectType;
 import com.skull.project.model.Project;
+import com.skull.project.model.ProjectDates;
 
 @SpringBootTest
 class ProjectRepositoryTest {
@@ -66,15 +67,20 @@ class ProjectRepositoryTest {
 
 		project.setClientProjectCode(TEST_PROJECT_CODE);
 		project.setName(TEST_PROJECT_NAME);
+		project.setDescription(TEST_PROJECT_DESCRIPTION);
+
+		ProjectDates dates = new ProjectDates();
+		dates.setStartDate(new Date());
+		dates.setEndDate(new Date());
+		dates.setRealStartDate(new Date());
+		dates.setNewEndDate(new Date());
+
+		project.setDates(dates);
+
 		project.setClientProjectCode(TEST_CLIENT_PROJECT_CODE);
 		project.setClientId(UUID.randomUUID());
 		project.setClientName(TEST_PROJECT_CLIENT_NAME);
-		project.setStartDate(new Date());
-		project.setEndDate(new Date());
-		project.setRealStartDate(new Date());
-		project.setNewEndDate(new Date());
-		project.setDescription(TEST_PROJECT_DESCRIPTION);
-		project.setTotalContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
+		project.setContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
 		project.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
 		project.setActionPlan(TEST_PROJECT_ACTION_PLAN);
 		project.setType(TEST_PROJECT_TYPE);

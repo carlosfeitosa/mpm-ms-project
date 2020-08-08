@@ -52,15 +52,20 @@ class ProjectTest {
 
 		project.setCode(TEST_PROJECT_CODE);
 		project.setName(TEST_PROJECT_NAME);
+		project.setDescription(TEST_PROJECT_DESCRIPTION);
+
+		ProjectDates dates = new ProjectDates();
+		dates.setStartDate(startDate);
+		dates.setEndDate(endDate);
+		dates.setRealStartDate(realStartDate);
+		dates.setNewEndDate(newEndDate);
+
+		project.setDates(dates);
+
 		project.setClientProjectCode(TEST_CLIENT_PROJECT_CODE);
 		project.setClientId(clientId);
 		project.setClientName(TEST_PROJECT_CLIENT_NAME);
-		project.setStartDate(startDate);
-		project.setEndDate(endDate);
-		project.setDescription(TEST_PROJECT_DESCRIPTION);
-		project.setRealStartDate(realStartDate);
-		project.setNewEndDate(newEndDate);
-		project.setTotalContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
+		project.setContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
 		project.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
 		project.setActionPlan(TEST_PROJECT_ACTION_PLAN);
 		project.setType(TEST_PROJECT_TYPE);
