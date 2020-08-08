@@ -22,7 +22,7 @@ import lombok.Setter;
  *
  */
 @MappedSuperclass
-public abstract class AbstractEntityModel { // NOPMD by skull on 8/8/20, 11:32 AM
+public abstract class AbstractModel { // NOPMD by skull on 8/8/20, 11:32 AM
 
 	/**
 	 * Entity Identifier.

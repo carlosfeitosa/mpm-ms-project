@@ -15,6 +15,8 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 
 import com.skull.project.controller.ProjectController;
+import com.skull.project.dto.ProjectClientInformationDto;
+import com.skull.project.dto.ProjectDatesDto;
 import com.skull.project.dto.ProjectDto;
 
 @SpringBootTest(properties = { "service.preload.database=true" })
@@ -72,13 +74,21 @@ class ProjectControllerImplTest {
 	void testIfCanCreateAProject() {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto datesDto = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		datesDto.setStartDate(new Date());
+		datesDto.setEndDate(new Date());
+
+		projectDto.setDates(datesDto);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 
@@ -90,13 +100,21 @@ class ProjectControllerImplTest {
 	void testIfCanUpdateAProject() {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto datesDto = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		datesDto.setStartDate(new Date());
+		datesDto.setEndDate(new Date());
+
+		projectDto.setDates(datesDto);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 
@@ -104,12 +122,12 @@ class ProjectControllerImplTest {
 
 		UUID newClientId = UUID.randomUUID();
 
-		createdProjectDto.getContent().setClientId(newClientId);
+		createdProjectDto.getContent().getClientInformation().setClientId(newClientId);
 
 		EntityModel<ProjectDto> updatedProject = controller.updateItem(createdProjectDto.getContent(),
 				createdProjectDto.getContent().getId());
 
-		assertThat(updatedProject.getContent().getClientId()).isEqualTo(newClientId);
+		assertThat(updatedProject.getContent().getClientInformation().getClientId()).isEqualTo(newClientId);
 	}
 
 	@Test
@@ -117,13 +135,21 @@ class ProjectControllerImplTest {
 	void testIfUpdateAProjectIdThrowsException() {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto dates = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		dates.setStartDate(new Date());
+		dates.setEndDate(new Date());
+
+		projectDto.setDates(dates);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 
@@ -133,9 +159,11 @@ class ProjectControllerImplTest {
 
 		createdProjectDto.getContent().setId(newProjectId);
 
+		ProjectDto projectForUpdate = createdProjectDto.getContent();
+
 		Exception exception = assertThrows(NoSuchElementException.class, () -> {
 
-			controller.updateItem(createdProjectDto.getContent(), newProjectId);
+			controller.updateItem(projectForUpdate, newProjectId);
 		});
 
 		String actualMessage = exception.getMessage();
@@ -148,13 +176,21 @@ class ProjectControllerImplTest {
 	void testIfCanDeleteAProject() {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto dates = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		dates.setStartDate(new Date());
+		dates.setEndDate(new Date());
+
+		projectDto.setDates(dates);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		EntityModel<ProjectDto> createdProjectDto = controller.newItem(projectDto);
 

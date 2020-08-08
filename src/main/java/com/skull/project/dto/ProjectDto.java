@@ -1,6 +1,5 @@
 package com.skull.project.dto;
 
-import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -22,6 +21,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ProjectDto extends RepresentationModel<ProjectDto> {
+
 	/**
 	 * Project identifier.
 	 */
@@ -38,59 +38,9 @@ public class ProjectDto extends RepresentationModel<ProjectDto> {
 	private String name;
 
 	/**
-	 * Project start date.
-	 */
-	private Date startDate;
-
-	/**
-	 * Project end date.
-	 */
-	private Date endDate;
-
-	/**
-	 * Project real start.
-	 */
-	private Date realStartDate;
-
-	/**
-	 * Project new end date.
-	 */
-	private Date newEndDate;
-
-	/**
-	 * Project client's id.
-	 */
-	private UUID clientId;
-
-	/**
-	 * Project client's name.
-	 */
-	private String clientName;
-
-	/**
-	 * Project client's project code.
-	 */
-	private String clientProjectCode;
-
-	/**
 	 * Project's description.
 	 */
 	private String description;
-
-	/**
-	 * Project's total contracted hours.
-	 */
-	private Long totalContractedHours;
-
-	/**
-	 * Project's attention points.
-	 */
-	private String attentionPoints;
-
-	/**
-	 * Project's action plan.
-	 */
-	private String actionPlan;
 
 	/**
 	 * Project's type.
@@ -106,5 +56,30 @@ public class ProjectDto extends RepresentationModel<ProjectDto> {
 	 * Project's health.
 	 */
 	private ProjectHealth health;
+
+	/**
+	 * Project's dates.
+	 */
+	private ProjectDatesDto dates;
+
+	/**
+	 * Project's client information.
+	 */
+	private ProjectClientInformationDto clientInformation;
+
+	/**
+	 * Project's total contracted hours.
+	 */
+	private Long totalContractedHours;
+
+	/**
+	 * Project's attention points.
+	 */
+	private String attentionPoints;
+
+	/**
+	 * Project's action plan.
+	 */
+	private String actionPlan;
 
 }

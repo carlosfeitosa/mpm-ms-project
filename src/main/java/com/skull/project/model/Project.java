@@ -28,7 +28,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity(name = "project")
-public class Project extends AbstractEntityModel {
+public class Project extends AbstractModel {
 
 	/**
 	 * Project code.

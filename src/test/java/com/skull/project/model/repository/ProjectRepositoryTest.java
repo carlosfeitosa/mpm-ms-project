@@ -76,6 +76,7 @@ class ProjectRepositoryTest {
 		dates.setEndDate(new Date());
 		dates.setRealStartDate(new Date());
 		dates.setNewEndDate(new Date());
+		dates.setCreatedBy(UUID.randomUUID());
 
 		project.setDates(dates);
 
@@ -83,6 +84,7 @@ class ProjectRepositoryTest {
 		clientInformation.setClientProjectCode(TEST_CLIENT_PROJECT_CODE);
 		clientInformation.setClientId(UUID.randomUUID());
 		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+		clientInformation.setCreatedBy(UUID.randomUUID());
 
 		project.setClientInformation(clientInformation);
 

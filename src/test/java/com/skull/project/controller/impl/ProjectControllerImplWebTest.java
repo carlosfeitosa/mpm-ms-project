@@ -28,6 +28,8 @@ import org.springframework.web.client.RestClientException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skull.project.dto.ProjectClientInformationDto;
+import com.skull.project.dto.ProjectDatesDto;
 import com.skull.project.dto.ProjectDto;
 import com.skull.project.dto.response.ResponseProjectList;
 
@@ -124,13 +126,21 @@ class ProjectControllerImplWebTest {
 	void testIfCanCreateAProject() throws JsonMappingException, JsonProcessingException {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto dates = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		dates.setStartDate(new Date());
+		dates.setEndDate(new Date());
+
+		projectDto.setDates(dates);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);
@@ -147,13 +157,21 @@ class ProjectControllerImplWebTest {
 	void testIfCanUpdateAProject() throws JsonMappingException, JsonProcessingException {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto dates = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		dates.setStartDate(new Date());
+		dates.setEndDate(new Date());
+
+		projectDto.setDates(dates);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);
@@ -166,14 +184,14 @@ class ProjectControllerImplWebTest {
 
 		UUID newClientId = UUID.randomUUID();
 
-		savedProject.setClientId(newClientId);
+		savedProject.getClientInformation().setClientId(newClientId);
 
 		response = this.restTemplate.exchange(String.format("%s/%s", endpoint, savedProject.getId()), HttpMethod.PUT,
 				new HttpEntity<>(savedProject), String.class);
 
 		ProjectDto updatedProject = om.readValue(response.getBody(), ProjectDto.class);
 
-		assertThat(updatedProject.getClientId()).isEqualTo(newClientId);
+		assertThat(updatedProject.getClientInformation().getClientId()).isEqualTo(newClientId);
 	}
 
 	@Test
@@ -181,13 +199,21 @@ class ProjectControllerImplWebTest {
 	void testIfUpdateAProjectIdThrowsNotFound404Exception() throws JsonMappingException, JsonProcessingException {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto dates = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		dates.setStartDate(new Date());
+		dates.setEndDate(new Date());
+
+		projectDto.setDates(dates);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);
@@ -213,13 +239,21 @@ class ProjectControllerImplWebTest {
 	void testIfCanDeleteAProject() throws JsonMappingException, JsonProcessingException {
 
 		ProjectDto projectDto = new ProjectDto();
+		ProjectDatesDto dates = new ProjectDatesDto();
+		ProjectClientInformationDto clientInformation = new ProjectClientInformationDto();
 
 		projectDto.setName(TEST_PROJECT_NAME);
-		projectDto.setClientId(UUID.randomUUID());
 		projectDto.setDescription(TEST_PROJECT_DESCRIPTION);
-		projectDto.setClientName(TEST_PROJECT_CLIENT_NAME);
-		projectDto.setStartDate(new Date());
-		projectDto.setEndDate(new Date());
+
+		dates.setStartDate(new Date());
+		dates.setEndDate(new Date());
+
+		projectDto.setDates(dates);
+
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		projectDto.setClientInformation(clientInformation);
 
 		ResponseEntity<String> response = this.restTemplate.postForEntity(endpoint, new HttpEntity<>(projectDto),
 				String.class);

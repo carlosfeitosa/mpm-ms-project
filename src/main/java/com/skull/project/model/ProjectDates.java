@@ -26,7 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity(name = "project_dates")
-public class ProjectDates extends AbstractEntityModel {
+public class ProjectDates extends AbstractModel {
 
 	/**
 	 * Project dates identifier.
