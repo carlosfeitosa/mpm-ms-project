@@ -1,6 +1,5 @@
 package com.skull.project.model;
 
-import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -17,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Project's dates model.
+ * Project's client information model.
  * 
  * @author Carlos Feitosa (carlos.feitosa.nt@gmail.com)
  * @since 2020-08-08
@@ -25,8 +24,8 @@ import lombok.ToString;
  */
 @NoArgsConstructor
 @ToString
-@Entity(name = "project_dates")
-public class ProjectDates extends AbstractEntityModel {
+@Entity(name = "project_client_information")
+public class ProjectClientInformation extends AbstractEntityModel {
 
 	/**
 	 * Project dates identifier.
@@ -41,39 +40,31 @@ public class ProjectDates extends AbstractEntityModel {
 	/**
 	 * Project.
 	 */
-	@OneToOne(mappedBy = "dates")
+	@OneToOne(mappedBy = "clientInformation")
 	private Project project;
 
 	/**
-	 * Project start date.
+	 * Project client's id.
 	 */
-	@Column(name = "start_date", nullable = true)
+	@Column(name = "client_id", nullable = true)
 	@Getter
 	@Setter
-	private Date startDate;
+	private UUID clientId;
 
 	/**
-	 * Project end date.
+	 * Project client's name.
 	 */
-	@Column(name = "end_date", nullable = true)
+	@Column(name = "client_name", nullable = true, length = 200)
 	@Getter
 	@Setter
-	private Date endDate;
+	private String clientName;
 
 	/**
-	 * Project real start.
+	 * Project client's project code.
 	 */
-	@Column(name = "real_start_date", nullable = true)
+	@Column(name = "client_project_code", nullable = true, length = 50)
 	@Getter
 	@Setter
-	private Date realStartDate;
-
-	/**
-	 * Project new end date.
-	 */
-	@Column(name = "new_end_date", nullable = true)
-	@Getter
-	@Setter
-	private Date newEndDate;
+	private String clientProjectCode;
 
 }

@@ -1,4 +1,4 @@
-package com.skull.project.model.repository;
+package com.skull.project.repository;
 
 import java.util.UUID;
 

@@ -30,7 +30,9 @@ import com.skull.project.controller.ProjectController;
 import com.skull.project.converter.ProjectConverter;
 import com.skull.project.dto.ProjectDto;
 import com.skull.project.model.Project;
-import com.skull.project.model.repository.ProjectRepository;
+import com.skull.project.model.ProjectClientInformation;
+import com.skull.project.model.ProjectDates;
+import com.skull.project.repository.ProjectRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -176,6 +178,53 @@ public class ProjectControllerImpl implements ProjectController {
 
 			project.setModifiedBy(loggedUser);
 			project.setModifiedDate(new Date());
+		}
+
+		applyMaintenanceData(project.getId(), project.getDates(), loggedUser);
+		applyMaintenanceData(project.getId(), project.getClientInformation(), loggedUser);
+	}
+
+	/**
+	 * Apply maintenance data for project dates entity.
+	 * 
+	 * @param projectId  project id
+	 * @param dates      ProjectDates object
+	 * @param loggedUser UUID of logged user
+	 */
+	private void applyMaintenanceData(UUID projectId, ProjectDates dates, UUID loggedUser) {
+
+		if (null != dates) {
+
+			if (null == projectId) {
+
+				dates.setCreatedBy(loggedUser);
+			} else {
+
+				dates.setModifiedBy(loggedUser);
+				dates.setModifiedDate(new Date());
+			}
+		}
+	}
+
+	/**
+	 * Apply maintenance data for project client information entity.
+	 * 
+	 * @param projectId  project id
+	 * @param dates      ProjectDates object
+	 * @param loggedUser UUID of logged user
+	 */
+	private void applyMaintenanceData(UUID projectId, ProjectClientInformation clientInfo, UUID loggedUser) {
+
+		if (null != clientInfo) {
+
+			if (null == projectId) {
+
+				clientInfo.setCreatedBy(loggedUser);
+			} else {
+
+				clientInfo.setModifiedBy(loggedUser);
+				clientInfo.setModifiedDate(new Date());
+			}
 		}
 	}
 

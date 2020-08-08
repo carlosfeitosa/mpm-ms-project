@@ -18,7 +18,9 @@ import com.skull.project.enums.ProjectHealth;
 import com.skull.project.enums.ProjectStatus;
 import com.skull.project.enums.ProjectType;
 import com.skull.project.model.Project;
+import com.skull.project.model.ProjectClientInformation;
 import com.skull.project.model.ProjectDates;
+import com.skull.project.repository.ProjectRepository;
 
 @SpringBootTest
 class ProjectRepositoryTest {
@@ -65,7 +67,7 @@ class ProjectRepositoryTest {
 	@DisplayName("Test if project can be saved with all project information")
 	void testIfCanSaveMaximumProjectInformation() {
 
-		project.setClientProjectCode(TEST_PROJECT_CODE);
+		project.setCode(TEST_PROJECT_CODE);
 		project.setName(TEST_PROJECT_NAME);
 		project.setDescription(TEST_PROJECT_DESCRIPTION);
 
@@ -77,9 +79,13 @@ class ProjectRepositoryTest {
 
 		project.setDates(dates);
 
-		project.setClientProjectCode(TEST_CLIENT_PROJECT_CODE);
-		project.setClientId(UUID.randomUUID());
-		project.setClientName(TEST_PROJECT_CLIENT_NAME);
+		ProjectClientInformation clientInformation = new ProjectClientInformation();
+		clientInformation.setClientProjectCode(TEST_CLIENT_PROJECT_CODE);
+		clientInformation.setClientId(UUID.randomUUID());
+		clientInformation.setClientName(TEST_PROJECT_CLIENT_NAME);
+
+		project.setClientInformation(clientInformation);
+
 		project.setContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
 		project.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
 		project.setActionPlan(TEST_PROJECT_ACTION_PLAN);

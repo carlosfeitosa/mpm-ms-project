@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.skull.project.enums.ProjectType;
 import com.skull.project.model.Project;
-import com.skull.project.model.repository.ProjectRepository;
+import com.skull.project.repository.ProjectRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
