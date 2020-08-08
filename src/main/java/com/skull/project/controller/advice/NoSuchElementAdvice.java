@@ -16,12 +16,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  */
 @ControllerAdvice
-public class NoSuchElementAdvice {
+public class NoSuchElementAdvice { // NOPMD by skull on 8/8/20, 7:02 PM
 
+	/**
+	 * Set 404 if NoSuchElementException was raised.
+	 * 
+	 * @param exception generated exception
+	 * 
+	 * @return exception message
+	 */
 	@ResponseBody
 	@ExceptionHandler(NoSuchElementException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String noSuchElementHandler(NoSuchElementException ex) {
-		return ex.getMessage();
+	public String noSuchElementHandler(final NoSuchElementException exception) {
+
+		return exception.getMessage();
 	}
 }

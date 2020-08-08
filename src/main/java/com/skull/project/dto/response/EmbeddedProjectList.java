@@ -12,8 +12,11 @@ import com.skull.project.dto.ProjectDto;
  * @since 2020-08-05
  *
  */
-public class EmbeddedProjectList {
+public class EmbeddedProjectList { // NOPMD by skull on 8/8/20, 7:00 PM
 
+	/**
+	 * Project list.
+	 */
 	@JsonProperty("projectDtoList")
 	private List<ProjectDto> projectDtoList;
 
@@ -22,7 +25,7 @@ public class EmbeddedProjectList {
 		return projectDtoList;
 	}
 
-	public void setProjectDtoList(List<ProjectDto> projectDtoList) {
+	public void setProjectDtoList(final List<ProjectDto> projectDtoList) {
 
 		this.projectDtoList = projectDtoList;
 	}

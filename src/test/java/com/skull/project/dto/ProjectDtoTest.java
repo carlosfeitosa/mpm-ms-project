@@ -65,7 +65,7 @@ class ProjectDtoTest {
 		project1.setHealth(TEST_PROJECT_HEALTH);
 		project1.setDates(dates);
 		project1.setClientInformation(clientInformation);
-		project1.setTotalContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
+		project1.setTotalHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
 		project1.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
 		project1.setActionPlan(TEST_PROJECT_ACTION_PLAN);
 
@@ -78,7 +78,7 @@ class ProjectDtoTest {
 		project2.setHealth(TEST_PROJECT_HEALTH);
 		project2.setDates(dates);
 		project2.setClientInformation(clientInformation2);
-		project2.setTotalContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
+		project2.setTotalHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
 		project2.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
 		project2.setActionPlan(TEST_PROJECT_ACTION_PLAN);
 
@@ -122,7 +122,7 @@ class ProjectDtoTest {
 		projectDto.setHealth(TEST_PROJECT_HEALTH);
 		projectDto.setDates(dates);
 		projectDto.setClientInformation(clientInformation);
-		projectDto.setTotalContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
+		projectDto.setTotalHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
 		projectDto.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
 		projectDto.setActionPlan(TEST_PROJECT_ACTION_PLAN);
 

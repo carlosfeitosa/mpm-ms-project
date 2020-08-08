@@ -15,8 +15,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Configuration
 @Slf4j
-public class LoadModelMapper {
+public class LoadModelMapper { // NOPMD by skull on 8/8/20, 7:06 PM
 
+	/**
+	 * Configuration for model mapper for entity <--> dto convetion.
+	 * 
+	 * @return model matter object
+	 */
 	@Bean
 	public ModelMapper modelMapper() {
 

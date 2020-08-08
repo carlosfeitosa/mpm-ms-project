@@ -25,7 +25,7 @@ public class ProjectDto extends RepresentationModel<ProjectDto> {
 	/**
 	 * Project identifier.
 	 */
-	private UUID id;
+	private UUID id; // NOPMD by skull on 8/8/20, 7:18 PM
 
 	/**
 	 * Project code.
@@ -70,7 +70,7 @@ public class ProjectDto extends RepresentationModel<ProjectDto> {
 	/**
 	 * Project's total contracted hours.
 	 */
-	private Long totalContractedHours;
+	private Long totalHours;
 
 	/**
 	 * Project's attention points.

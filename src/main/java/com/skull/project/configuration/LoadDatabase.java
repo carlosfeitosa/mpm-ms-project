@@ -22,26 +22,37 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Configuration
 @Slf4j
-public class LoadDatabase {
+public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 
+	/**
+	 * Init database with mock data.
+	 * 
+	 * @param repository   repository used to save information.
+	 * @param initMockedDb true to mock data into database
+	 * 
+	 * @return args
+	 */
 	@Bean
-	CommandLineRunner initDatabase(ProjectRepository repository,
-			@Value("${service.preload.database}") boolean initMockedDatabase) {
+	public CommandLineRunner initDatabase(final ProjectRepository repository,
+			final @Value("${service.preload.database}") boolean initMockedDb) {
 		return args -> {
 
-			if (initMockedDatabase) {
+			if (initMockedDb) {
 
 				log.info("Preloading database...");
 
+				final Project project = new Project();
+
 				for (int i = 1; i <= 10; i++) {
-					Project project = new Project();
 
 					project.setName(String.format("Mocked project #%d", i));
 					project.setDescription(String.format("Mocked description #%d", i));
 
-					if (0 == (i % 2)) {
+					if (0 == i % 2) {
+
 						project.setType(ProjectType.INTERNAL_PROJECT);
 					} else {
+
 						project.setType(ProjectType.TIME_AND_MATERIAL_ALLOCATION);
 					}
 

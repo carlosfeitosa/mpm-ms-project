@@ -1,4 +1,4 @@
-package com.skull.project.controller.impl;
+package com.skull.project.controller.impl; // NOPMD by skull on 8/8/20, 7:29 PM
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -45,19 +45,35 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("${service.request.mapping}")
 @Slf4j
-public class ProjectControllerImpl implements ProjectController {
+public class ProjectControllerImpl implements ProjectController { // NOPMD by skull on 8/8/20, 7:19 PM
 
-	private static final String PROJECT_NOT_AVAILABLE_FOR_ID = "Project not available for id: ";
-	private static final String PROJECT_LINK_REF = "repo";
+	/**
+	 * Constant for project not available error.
+	 */
+	private static final String NOT_AVAILABLE = "Project not available for id: ";
 
+	/**
+	 * Repository link name.
+	 */
+	private static final String LINK_REF = "repo";
+
+	/**
+	 * Service mapping.
+	 */
 	@Value("${service.request.mapping}")
-	String controllerRequestMapping;
+	private String controllerRequestMapping; // NOPMD by skull on 8/8/20, 7:21 PM
 
+	/**
+	 * Project repository.
+	 */
 	@Autowired
-	private ProjectRepository repo;
+	private ProjectRepository repo; // NOPMD by skull on 8/8/20, 7:21 PM
 
+	/**
+	 * Project entity <--> dto converter.
+	 */
 	@Autowired
-	private ProjectConverter converter;
+	private ProjectConverter converter; // NOPMD by skull on 8/8/20, 7:20 PM
 
 	@Override
 	@GetMapping
@@ -65,11 +81,12 @@ public class ProjectControllerImpl implements ProjectController {
 
 		log.info("Getting all itens");
 
-		List<Project> result = repo.findAll();
+		final List<Project> result = repo.findAll();
 
-		List<ProjectDto> projects = result.stream().map(converter::convertFromEntity).collect(Collectors.toList());
+		final List<ProjectDto> projects = result.stream().map(converter::convertFromEntity)
+				.collect(Collectors.toList());
 
-		for (ProjectDto project : projects) {
+		for (final ProjectDto project : projects) {
 
 			project.add(getLink(project.getId(), null));
 		}
@@ -80,80 +97,81 @@ public class ProjectControllerImpl implements ProjectController {
 	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public EntityModel<ProjectDto> newItem(@RequestBody ProjectDto projectDto) {
+	public EntityModel<ProjectDto> newItem(final @RequestBody ProjectDto projectDto) {
 
 		log.info("Creating new item");
 		log.debug(String.format("Project name: %s", projectDto.getName()));
 
-		Project project = converter.convertFromDto(projectDto);
+		final Project project = converter.convertFromDto(projectDto);
 
 		applyMaintenanceData(project);
 
-		Project projectCreated = repo.save(project);
+		final Project projectCreated = repo.save(project);
 
-		ProjectDto result = converter.convertFromEntity(projectCreated);
+		final ProjectDto result = converter.convertFromEntity(projectCreated);
 		result.add(getLink(result.getId(), null));
-		result.add(getLink(null, PROJECT_LINK_REF));
+		result.add(getLink(null, LINK_REF));
 
 		return EntityModel.of(result);
 	}
 
 	@Override
 	@GetMapping("/{id}")
-	public EntityModel<ProjectDto> getById(@PathVariable(value = "id") UUID projectId) {
+	public EntityModel<ProjectDto> getById(final @PathVariable(value = "id") UUID projectId) { // NOPMD by skull on
+																								// 8/8/20, 7:33 PM
 
 		log.info("Getting project by id");
 		log.debug(String.format("Project id: %s", String.valueOf(projectId)));
 
-		Project project = repo.findById(projectId)
-				.orElseThrow(() -> new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId));
+		final Project project = repo.findById(projectId)
+				.orElseThrow(() -> new NoSuchElementException(NOT_AVAILABLE + projectId));
 
-		ProjectDto result = converter.convertFromEntity(project);
+		final ProjectDto result = converter.convertFromEntity(project);
 		result.add(getLink(result.getId(), null));
-		result.add(getLink(null, PROJECT_LINK_REF));
+		result.add(getLink(null, LINK_REF));
 
 		return EntityModel.of(result);
 	}
 
 	@Override
 	@PutMapping("/{id}")
-	public EntityModel<ProjectDto> updateItem(ProjectDto projectDto, UUID projectId) {
+	public EntityModel<ProjectDto> updateItem(final ProjectDto projectDto, final UUID projectId) {
 
 		log.info("Updating project");
 		log.debug(String.format("Project id: %s", String.valueOf(projectId)));
 
-		Optional<Project> optProject = repo.findById(projectId);
+		final Optional<Project> optProject = repo.findById(projectId);
 
 		if (optProject.isPresent()) {
 
-			Project project = optProject.get();
+			final Project project = optProject.get();
 
 			applyMaintenanceData(project);
 
-			ProjectDto result = converter.convertFromEntity(repo.save(converter.convertFromDto(projectDto, project)));
+			final ProjectDto result = converter
+					.convertFromEntity(repo.save(converter.convertFromDto(projectDto, project)));
 			result.add(getLink(result.getId(), null));
-			result.add(getLink(null, PROJECT_LINK_REF));
+			result.add(getLink(null, LINK_REF));
 
 			return EntityModel.of(result);
 		} else {
 
-			throw new NoSuchElementException(PROJECT_NOT_AVAILABLE_FOR_ID + projectId);
+			throw new NoSuchElementException(NOT_AVAILABLE + projectId);
 		}
 	}
 
 	@Override
 	@DeleteMapping("/{id}")
-	public void deleteItem(UUID projectId) {
+	public void deleteItem(final UUID projectId) {
 
 		log.info("Deleting project");
 
-		try {
+		if (repo.existsById(projectId)) {
 
 			repo.deleteById(projectId);
-		} catch (Exception e) {
+		} else {
 
-			throw new NoSuchElementException(
-					PROJECT_NOT_AVAILABLE_FOR_ID + projectId + System.lineSeparator() + e.getMessage());
+			throw new NoSuchElementException(NOT_AVAILABLE.concat(projectId.toString()));
 		}
 	}
 
@@ -164,11 +182,11 @@ public class ProjectControllerImpl implements ProjectController {
 	 * 
 	 * @param project to apply maintenance data
 	 */
-	private void applyMaintenanceData(Project project) {
+	private void applyMaintenanceData(final Project project) {
 
 		log.info("Applying maintenance data");
 
-		UUID loggedUser = UUID.randomUUID();
+		final UUID loggedUser = UUID.randomUUID();
 
 		applyMaintenanceData(project.getId(), project, loggedUser);
 		applyMaintenanceData(project.getId(), project.getDates(), loggedUser);
@@ -182,7 +200,7 @@ public class ProjectControllerImpl implements ProjectController {
 	 * @param model      entity object
 	 * @param loggedUser UUID of logged user
 	 */
-	private void applyMaintenanceData(UUID projectId, AbstractModel model, UUID loggedUser) {
+	private void applyMaintenanceData(final UUID projectId, final AbstractModel model, final UUID loggedUser) {
 
 		if (null != model) {
 
@@ -200,13 +218,13 @@ public class ProjectControllerImpl implements ProjectController {
 	/**
 	 * Return link for controller.
 	 * 
-	 * @param id  project identification. If null, link will be to controller
-	 *            default method.
+	 * @param id  project identification
 	 * @param ref link reference. If null, link ref will be self
 	 * 
 	 * @return link to controller method
 	 */
-	private Link getLink(UUID id, String ref) {
+	private Link getLink(final UUID id, final String ref) { // NOPMD by skull on 8/8/20, 7:34 PM
+
 		WebMvcLinkBuilder linkBuilder = linkTo(ProjectController.class).slash(controllerRequestMapping);
 
 		log.info("Generating link for project");
@@ -220,7 +238,7 @@ public class ProjectControllerImpl implements ProjectController {
 
 		if (ref != null) {
 
-			return linkBuilder.withRel(ref);
+			return linkBuilder.withRel(ref); // NOPMD by skull on 8/8/20, 7:46 PM
 		}
 
 		return linkBuilder.withSelfRel();

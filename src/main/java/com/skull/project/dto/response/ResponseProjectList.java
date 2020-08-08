@@ -9,8 +9,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since 2020-08-05
  *
  */
-public class ResponseProjectList {
+public class ResponseProjectList { // NOPMD by skull on 8/8/20, 6:59 PM
 
+	/**
+	 * Embbedded object on response object.
+	 */
 	@JsonProperty("_embedded")
 	private EmbeddedProjectList embedded;
 
@@ -18,7 +21,7 @@ public class ResponseProjectList {
 		return embedded;
 	}
 
-	public void setEmbedded(EmbeddedProjectList embedded) {
+	public void setEmbedded(final EmbeddedProjectList embedded) {
 		this.embedded = embedded;
 	}
 }

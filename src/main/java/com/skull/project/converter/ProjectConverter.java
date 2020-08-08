@@ -18,10 +18,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class ProjectConverter {
+public class ProjectConverter { // NOPMD by skull on 8/8/20, 6:56 PM
 
+	/**
+	 * Model mapper for entity <--> dto convertion.
+	 */
 	@Autowired
-	private ModelMapper modelMapper;
+	private ModelMapper modelMapper; // NOPMD by skull on 8/8/20, 6:57 PM
 
 	/**
 	 * Convert entity to dto.
@@ -30,7 +33,7 @@ public class ProjectConverter {
 	 * 
 	 * @return dto
 	 */
-	public ProjectDto convertFromEntity(Project entity) {
+	public ProjectDto convertFromEntity(final Project entity) {
 
 		log.info("Converting to dto");
 
@@ -44,7 +47,7 @@ public class ProjectConverter {
 	 * 
 	 * @return entity
 	 */
-	public Project convertFromDto(ProjectDto projectDto) {
+	public Project convertFromDto(final ProjectDto projectDto) {
 
 		log.info("Converting to entity");
 
@@ -59,7 +62,7 @@ public class ProjectConverter {
 	 * 
 	 * @return entity
 	 */
-	public Project convertFromDto(ProjectDto dto, Project entityForUpdate) {
+	public Project convertFromDto(final ProjectDto dto, final Project entityForUpdate) {
 
 		log.info("Converting to entity with project destination");
 
