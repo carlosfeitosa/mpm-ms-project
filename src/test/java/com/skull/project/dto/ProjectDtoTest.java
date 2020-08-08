@@ -77,11 +77,13 @@ class ProjectDtoTest {
 		project2.setHealth(TEST_PROJECT_HEALTH);
 
 		assertThat(project1).isEqualTo(project2);
-		assertThat(project1.hashCode()).isEqualTo(project2.hashCode());
+		assertThat(project1).hasSameHashCodeAs(project2);
 
 		project2.setClientId(UUID.randomUUID());
 
 		assertThat(project1.hashCode()).isNotEqualTo(project2.hashCode());
+
+		assertThat(project1.hashCode()).isNotEqualTo(null);
 	}
 
 	@Test
