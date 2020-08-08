@@ -82,26 +82,25 @@ class ProjectTest {
 
 		String projectToString = project.toString();
 
-		assertThat(projectToString.contains(TEST_PROJECT_CODE)).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_NAME)).isTrue();
-		assertThat(projectToString.contains(TEST_CLIENT_PROJECT_CODE)).isTrue();
-		assertThat(projectToString.contains(clientId.toString())).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_CLIENT_NAME)).isTrue();
-		assertThat(projectToString.contains(startDate.toString())).isTrue();
-		assertThat(projectToString.contains(endDate.toString())).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_DESCRIPTION)).isTrue();
-		assertThat(projectToString.contains(createdBy.toString())).isTrue();
-		assertThat(projectToString.contains(modifiedBy.toString())).isTrue();
-		assertThat(projectToString.contains(modifiedDate.toString())).isTrue();
-
-		assertThat(projectToString.contains(realStartDate.toString())).isTrue();
-		assertThat(projectToString.contains(newEndDate.toString())).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_TOTAL_CONTRACTED_HOURS.toString())).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_ATTENTION_POINTS)).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_ACTION_PLAN)).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_TYPE.toString())).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_STATUS.toString())).isTrue();
-		assertThat(projectToString.contains(TEST_PROJECT_HEALTH.toString())).isTrue();
+		assertThat(projectToString).contains(TEST_PROJECT_CODE);
+		assertThat(projectToString).contains(TEST_PROJECT_NAME);
+		assertThat(projectToString).contains(TEST_CLIENT_PROJECT_CODE);
+		assertThat(projectToString).contains(clientId.toString());
+		assertThat(projectToString).contains(TEST_PROJECT_CLIENT_NAME);
+		assertThat(projectToString).contains(startDate.toString());
+		assertThat(projectToString).contains(endDate.toString());
+		assertThat(projectToString).contains(TEST_PROJECT_DESCRIPTION);
+		assertThat(projectToString).contains(createdBy.toString());
+		assertThat(projectToString).contains(modifiedBy.toString());
+		assertThat(projectToString).contains(modifiedDate.toString());
+		assertThat(projectToString).contains(realStartDate.toString());
+		assertThat(projectToString).contains(newEndDate.toString());
+		assertThat(projectToString).contains(TEST_PROJECT_TOTAL_CONTRACTED_HOURS.toString());
+		assertThat(projectToString).contains(TEST_PROJECT_ATTENTION_POINTS);
+		assertThat(projectToString).contains(TEST_PROJECT_ACTION_PLAN);
+		assertThat(projectToString).contains(TEST_PROJECT_TYPE.toString());
+		assertThat(projectToString).contains(TEST_PROJECT_STATUS.toString());
+		assertThat(projectToString).contains(TEST_PROJECT_HEALTH.toString());
 	}
 
 }
