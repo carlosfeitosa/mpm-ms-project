@@ -87,8 +87,6 @@ class ProjectDtoTest {
 		project2.getClientInformation().setClientId(UUID.randomUUID());
 
 		assertThat(project1.hashCode()).isNotEqualTo(project2.hashCode());
-
-		assertThat(project1.hashCode()).isNotEqualTo(null);
 	}
 
 	@Test

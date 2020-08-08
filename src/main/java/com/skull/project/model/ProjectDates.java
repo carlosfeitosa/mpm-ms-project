@@ -1,15 +1,10 @@
 package com.skull.project.model;
 
 import java.util.Date;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,16 +22,6 @@ import lombok.ToString;
 @ToString
 @Entity(name = "project_dates")
 public class ProjectDates extends AbstractModel {
-
-	/**
-	 * Project dates identifier.
-	 */
-	@Id
-	@GeneratedValue(generator = "UUID")
-	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-	@Column(name = "id", updatable = false, nullable = false)
-	@Getter
-	private UUID id; // NOPMD by skull on 8/8/20, 10:11 AM
 
 	/**
 	 * Project.
