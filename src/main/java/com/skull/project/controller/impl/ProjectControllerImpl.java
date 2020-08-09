@@ -83,7 +83,8 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 
 		final List<Project> result = repo.findAll();
 
-		final List<ProjectDto> projects = result.stream().map(converter::convertFromEntity)
+		final List<ProjectDto> projects = result.stream().map(converter::convertFromEntity) // NOPMD by skull on 8/9/20,
+																							// 2:47 PM
 				.collect(Collectors.toList());
 
 		for (final ProjectDto project : projects) {
@@ -109,8 +110,9 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 		final Project projectCreated = repo.save(project);
 
 		final ProjectDto result = converter.convertFromEntity(projectCreated);
-		result.add(getLink(result.getId(), null));
-		result.add(getLink(null, LINK_REF));
+
+		result.add(getLink(result.getId(), null)); // NOPMD by skull on 8/9/20, 2:53 PM
+		result.add(getLink(null, LINK_REF)); // NOPMD by skull on 8/9/20, 2:53 PM
 
 		return EntityModel.of(result);
 	}
@@ -123,12 +125,13 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 		log.info("Getting project by id");
 		log.debug(String.format("Project id: %s", String.valueOf(projectId)));
 
-		final Project project = repo.findById(projectId)
+		final Project project = repo.findById(projectId) // NOPMD by skull on 8/9/20, 2:53 PM
 				.orElseThrow(() -> new NoSuchElementException(NOT_AVAILABLE + projectId));
 
 		final ProjectDto result = converter.convertFromEntity(project);
-		result.add(getLink(result.getId(), null));
-		result.add(getLink(null, LINK_REF));
+		
+		result.add(getLink(result.getId(), null)); // NOPMD by skull on 8/9/20, 2:53 PM
+		result.add(getLink(null, LINK_REF)); // NOPMD by skull on 8/9/20, 2:53 PM
 
 		return EntityModel.of(result);
 	}
@@ -142,7 +145,7 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 
 		final Optional<Project> optProject = repo.findById(projectId);
 
-		if (optProject.isPresent()) {
+		if (optProject.isPresent()) { // NOPMD by skull on 8/9/20, 2:53 PM
 
 			final Project project = optProject.get();
 
@@ -150,8 +153,9 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 
 			final ProjectDto result = converter
 					.convertFromEntity(repo.save(converter.convertFromDto(projectDto, project)));
-			result.add(getLink(result.getId(), null));
-			result.add(getLink(null, LINK_REF));
+			
+			result.add(getLink(result.getId(), null)); // NOPMD by skull on 8/9/20, 2:51 PM
+			result.add(getLink(null, LINK_REF)); // NOPMD by skull on 8/9/20, 2:51 PM
 
 			return EntityModel.of(result);
 		} else {
@@ -225,7 +229,10 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 	 */
 	private Link getLink(final UUID id, final String ref) { // NOPMD by skull on 8/8/20, 7:34 PM
 
-		WebMvcLinkBuilder linkBuilder = linkTo(ProjectController.class).slash(controllerRequestMapping);
+		WebMvcLinkBuilder linkBuilder = linkTo(ProjectController.class).slash(controllerRequestMapping); // NOPMD by
+																											// skull on
+																											// 8/9/20,
+																											// 2:48 PM
 
 		log.info("Generating link for project");
 
