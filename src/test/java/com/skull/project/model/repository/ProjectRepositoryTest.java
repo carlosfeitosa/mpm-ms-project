@@ -142,7 +142,7 @@ class ProjectRepositoryTest {
 		Project createdProject = repo.save(project);
 		Optional<Project> foundProject = repo.findById(createdProject.getId());
 
-		assertThat(foundProject.isPresent()).isTrue();
+		assertThat(foundProject).isPresent();
 
 		Project project = foundProject.get();
 
@@ -155,6 +155,6 @@ class ProjectRepositoryTest {
 
 		Optional<Project> foundProject = repo.findById(UUID.randomUUID());
 
-		assertThat(foundProject.isPresent()).isFalse();
+		assertThat(foundProject).isEmpty();
 	}
 }
