@@ -45,22 +45,33 @@ public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 
 				for (int i = 1; i <= 10; i++) {
 
-					project.setName(String.format("Mocked project #%d", i));
-					project.setDescription(String.format("Mocked description #%d", i));
-
-					if (0 == i % 2) {
-
-						project.setType(ProjectType.INTERNAL_PROJECT);
-					} else {
-
-						project.setType(ProjectType.TIME_AND_MATERIAL_ALLOCATION);
-					}
-
-					project.setCreatedBy(UUID.randomUUID());
+					setProjectInformation(project, i);
 
 					repository.save(project);
 				}
 			}
 		};
+	}
+
+	/**
+	 * Set project information.
+	 * 
+	 * @param project project entity
+	 * @param row     row number
+	 */
+	private void setProjectInformation(final Project project, int row) {
+
+		project.setName(String.format("Mocked project #%d", row));
+		project.setDescription(String.format("Mocked description #%d", row));
+
+		if (0 == row % 2) {
+
+			project.setType(ProjectType.INTERNAL_PROJECT);
+		} else {
+
+			project.setType(ProjectType.TIME_AND_MATERIAL_ALLOCATION);
+		}
+
+		project.setCreatedBy(UUID.randomUUID());
 	}
 }
