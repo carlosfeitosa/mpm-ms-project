@@ -129,7 +129,7 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 				.orElseThrow(() -> new NoSuchElementException(NOT_AVAILABLE + projectId));
 
 		final ProjectDto result = converter.convertFromEntity(project);
-		
+
 		result.add(getLink(result.getId(), null)); // NOPMD by skull on 8/9/20, 2:53 PM
 		result.add(getLink(null, LINK_REF)); // NOPMD by skull on 8/9/20, 2:53 PM
 
@@ -147,13 +147,11 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 
 		if (optProject.isPresent()) { // NOPMD by skull on 8/9/20, 2:53 PM
 
-			final Project project = optProject.get();
-
-			applyMaintenanceData(project);
+			final Project project = applyMaintenanceData(optProject.get());
 
 			final ProjectDto result = converter
 					.convertFromEntity(repo.save(converter.convertFromDto(projectDto, project)));
-			
+
 			result.add(getLink(result.getId(), null)); // NOPMD by skull on 8/9/20, 2:51 PM
 			result.add(getLink(null, LINK_REF)); // NOPMD by skull on 8/9/20, 2:51 PM
 
@@ -180,21 +178,24 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 	}
 
 	/**
-	 * Apply maintenance data to project entity.
+	 * Apply maintenance data information for project.
 	 * 
-	 * TODO apply looged user
+	 * @param project project for update
 	 * 
-	 * @param project to apply maintenance data
+	 * @return updated project
 	 */
-	private void applyMaintenanceData(final Project project) {
+	private Project applyMaintenanceData(final Project project) {
 
 		log.info("Applying maintenance data");
 
+		// TODO apply looged user
 		final UUID loggedUser = UUID.randomUUID();
 
 		applyMaintenanceData(project.getId(), project, loggedUser);
 		applyMaintenanceData(project.getId(), project.getDates(), loggedUser);
 		applyMaintenanceData(project.getId(), project.getClientInformation(), loggedUser);
+
+		return project;
 	}
 
 	/**

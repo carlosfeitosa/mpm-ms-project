@@ -59,7 +59,7 @@ public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 	 * @param project project entity
 	 * @param row     row number
 	 */
-	private void setProjectInformation(final Project project, int row) {
+	private void setProjectInformation(final Project project, final int row) {
 
 		project.setName(String.format("Mocked project #%d", row));
 		project.setDescription(String.format("Mocked description #%d", row));
