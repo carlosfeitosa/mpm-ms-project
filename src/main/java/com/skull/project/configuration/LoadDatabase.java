@@ -1,5 +1,6 @@
 package com.skull.project.configuration;
 
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.skull.project.enums.ProjectType;
 import com.skull.project.model.Project;
+import com.skull.project.model.ProjectClientInformation;
+import com.skull.project.model.ProjectDates;
 import com.skull.project.repository.ProjectRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @Slf4j
 public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
+
+	private static final String PROJECT_NAME = "Mocked project #%d";
+	private static final String PROJECT_DESCRIPTION = "Mocked description #%d";
+	private static final String CLIENT_NAME = "Mocked client name #%d";
 
 	/**
 	 * Init database with mock data.
@@ -41,11 +48,12 @@ public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 
 				log.info("Preloading database...");
 
-				final Project project = new Project();
-
 				for (int i = 1; i <= 10; i++) {
 
+					final Project project = new Project(); // NOPMD by skull on 8/9/20, 10:32 PM
+
 					setProjectInformation(project, i);
+					setProjectDatesAndClientInformation(project, i);
 
 					repository.save(project);
 				}
@@ -61,8 +69,8 @@ public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 	 */
 	private void setProjectInformation(final Project project, final int row) {
 
-		project.setName(String.format("Mocked project #%d", row));
-		project.setDescription(String.format("Mocked description #%d", row));
+		project.setName(String.format(PROJECT_NAME, row));
+		project.setDescription(String.format(PROJECT_DESCRIPTION, row));
 
 		if (0 == row % 2) {
 
@@ -73,5 +81,25 @@ public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 		}
 
 		project.setCreatedBy(UUID.randomUUID());
+	}
+
+	/**
+	 * Set project dates and client information.
+	 * 
+	 * @param project project entity
+	 * @param row     row number
+	 */
+	private void setProjectDatesAndClientInformation(final Project project, final int row) {
+
+		ProjectDates dates = new ProjectDates();
+		ProjectClientInformation clientInformation = new ProjectClientInformation();
+
+		dates.setStartDate(new Date());
+		dates.setCreatedBy(UUID.randomUUID());
+		clientInformation.setClientName(String.format(CLIENT_NAME, row));
+		clientInformation.setCreatedBy(UUID.randomUUID());
+
+		project.setDates(dates);
+		project.setClientInformation(clientInformation);
 	}
 }
