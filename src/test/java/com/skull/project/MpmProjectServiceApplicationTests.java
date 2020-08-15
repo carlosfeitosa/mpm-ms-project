@@ -21,6 +21,7 @@ class MpmProjectServiceApplicationTests {
 	@Test
 	@DisplayName("Test if context can load")
 	void testIfContextLoads() {
+
 		MpmProjectServiceApplication.main(new String[] {});
 		
 		assertThat(controller).isNotNull();
