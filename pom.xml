@@ -11,10 +11,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.skull</groupId>
-	<artifactId>mpm-project-service</artifactId>
+	<artifactId>mpm-ms-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mpm-project-service</name>
-	<description>mpm project service</description>
+	<name>mpm-ms-project</name>
+	<description>mpm project microservice</description>
 
 	<properties>
 		<java.version>1.8</java.version>

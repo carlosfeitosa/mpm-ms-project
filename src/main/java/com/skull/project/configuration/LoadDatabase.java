@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.skull.project.enums.ProjectType;
+import com.skull.project.enums.ProjectTypeEnum;
 import com.skull.project.model.Project;
 import com.skull.project.model.ProjectClientInformation;
 import com.skull.project.model.ProjectDates;
@@ -27,8 +27,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 
+	/**
+	 * Project's name.
+	 */
 	private static final String PROJECT_NAME = "Mocked project #%d";
-	private static final String PROJECT_DESCRIPTION = "Mocked description #%d";
+	/**
+	 * Project's description.
+	 */
+	private static final String PROJECT_DESC = "Mocked description #%d";
+	/**
+	 * Project's client name.
+	 */
 	private static final String CLIENT_NAME = "Mocked client name #%d";
 
 	/**
@@ -70,14 +79,14 @@ public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 	private void setProjectInformation(final Project project, final int row) {
 
 		project.setName(String.format(PROJECT_NAME, row));
-		project.setDescription(String.format(PROJECT_DESCRIPTION, row));
+		project.setDescription(String.format(PROJECT_DESC, row));
 
 		if (0 == row % 2) {
 
-			project.setType(ProjectType.INTERNAL_PROJECT);
+			project.setType(ProjectTypeEnum.INTERNAL_PROJECT);
 		} else {
 
-			project.setType(ProjectType.TIME_AND_MATERIAL_ALLOCATION);
+			project.setType(ProjectTypeEnum.TIME_AND_MATERIAL_ALLOCATION);
 		}
 
 		project.setCreatedBy(UUID.randomUUID());
@@ -91,8 +100,8 @@ public class LoadDatabase { // NOPMD by skull on 8/8/20, 7:07 PM
 	 */
 	private void setProjectDatesAndClientInformation(final Project project, final int row) {
 
-		ProjectDates dates = new ProjectDates();
-		ProjectClientInformation clientInformation = new ProjectClientInformation();
+		final ProjectDates dates = new ProjectDates();
+		final ProjectClientInformation clientInformation = new ProjectClientInformation();
 
 		dates.setStartDate(new Date());
 		dates.setCreatedBy(UUID.randomUUID());

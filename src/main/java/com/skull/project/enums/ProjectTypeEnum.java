@@ -1,12 +1,12 @@
 package com.skull.project.enums;
 
 /**
- * Enum for project status.
+ * Enum for project type.
  * 
  * @author Carlos Feitosa (carlos.feitosa.nt@gmail.com)
  * @since 2020-07-25
  *
  */
-public enum ProjectStatus {
-	NOT_STARTED, ON_GOING, DELIVERED, DONE, ON_HOLD;
+public enum ProjectTypeEnum {
+	INTERNAL_PROJECT, TIME_AND_MATERIAL_ALLOCATION;
 }

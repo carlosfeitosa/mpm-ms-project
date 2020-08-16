@@ -7,6 +7,6 @@ package com.skull.project.enums;
  * @since 2020-07-25
  *
  */
-public enum ProjectHealth {
+public enum ProjectHealthEnum {
 	FINE, ALERT, RED_FLAG;
 }

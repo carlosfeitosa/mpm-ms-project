@@ -8,9 +8,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.skull.project.enums.ProjectHealth;
-import com.skull.project.enums.ProjectStatus;
-import com.skull.project.enums.ProjectType;
+import com.skull.project.enums.ProjectHealthEnum;
+import com.skull.project.enums.ProjectStatusEnum;
+import com.skull.project.enums.ProjectTypeEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -62,7 +62,7 @@ public class Project extends AbstractModel {
 	@Enumerated(EnumType.STRING)
 	@Getter
 	@Setter
-	private ProjectType type;
+	private ProjectTypeEnum type;
 
 	/**
 	 * Project's status.
@@ -71,7 +71,7 @@ public class Project extends AbstractModel {
 	@Enumerated(EnumType.STRING)
 	@Getter
 	@Setter
-	private ProjectStatus status;
+	private ProjectStatusEnum status;
 
 	/**
 	 * Project's health.
@@ -80,7 +80,7 @@ public class Project extends AbstractModel {
 	@Enumerated(EnumType.STRING)
 	@Getter
 	@Setter
-	private ProjectHealth health;
+	private ProjectHealthEnum health;
 
 	/**
 	 * Project's dates.

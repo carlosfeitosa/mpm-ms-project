@@ -4,9 +4,9 @@ import java.util.UUID;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.skull.project.enums.ProjectHealth;
-import com.skull.project.enums.ProjectStatus;
-import com.skull.project.enums.ProjectType;
+import com.skull.project.enums.ProjectHealthEnum;
+import com.skull.project.enums.ProjectStatusEnum;
+import com.skull.project.enums.ProjectTypeEnum;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,17 +45,17 @@ public class ProjectDto extends RepresentationModel<ProjectDto> {
 	/**
 	 * Project's type.
 	 */
-	private ProjectType type;
+	private ProjectTypeEnum type;
 
 	/**
 	 * Project's status.
 	 */
-	private ProjectStatus status;
+	private ProjectStatusEnum status;
 
 	/**
 	 * Project's health.
 	 */
-	private ProjectHealth health;
+	private ProjectHealthEnum health;
 
 	/**
 	 * Project's dates.

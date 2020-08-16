@@ -8,9 +8,9 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.skull.project.enums.ProjectHealth;
-import com.skull.project.enums.ProjectStatus;
-import com.skull.project.enums.ProjectType;
+import com.skull.project.enums.ProjectHealthEnum;
+import com.skull.project.enums.ProjectStatusEnum;
+import com.skull.project.enums.ProjectTypeEnum;
 
 class ProjectDtoTest {
 
@@ -22,9 +22,9 @@ class ProjectDtoTest {
 	private static final Long TEST_PROJECT_TOTAL_CONTRACTED_HOURS = 100000L;
 	private static final String TEST_PROJECT_ATTENTION_POINTS = "No attention points for now";
 	private static final String TEST_PROJECT_ACTION_PLAN = "Let's do it!";
-	private static final ProjectType TEST_PROJECT_TYPE = ProjectType.INTERNAL_PROJECT;
-	private static final ProjectStatus TEST_PROJECT_STATUS = ProjectStatus.ON_HOLD;
-	private static final ProjectHealth TEST_PROJECT_HEALTH = ProjectHealth.ALERT;
+	private static final ProjectTypeEnum TEST_PROJECT_TYPE = ProjectTypeEnum.INTERNAL_PROJECT;
+	private static final ProjectStatusEnum TEST_PROJECT_STATUS = ProjectStatusEnum.ON_HOLD;
+	private static final ProjectHealthEnum TEST_PROJECT_HEALTH = ProjectHealthEnum.ALERT;
 
 	@Test
 	@DisplayName("Test if can perform equals and hashcode")
