@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.skull.project.controller.ProjectController;
 
 @SpringBootTest
-class MpmProjectServiceApplicationTests {
+class MpmMSProjectApplicationTests {
 
 	@Autowired
 	private ProjectController controller;
@@ -22,7 +22,7 @@ class MpmProjectServiceApplicationTests {
 	@DisplayName("Test if context can load")
 	void testIfContextLoads() {
 		
-		MpmProjectServiceApplication.main(new String[] {});
+		MpmMSProjectApplication.main(new String[] {});
 		
 		assertThat(controller).isNotNull();
 	}

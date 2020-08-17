@@ -13,7 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-public class MpmProjectServiceApplication { // NOPMD by skull on 8/8/20, 10:02 AM
+public class MpmMSProjectApplication { // NOPMD by skull on 8/8/20, 10:02 AM
 
 	/**
 	 * Default main constructor.
@@ -22,6 +22,6 @@ public class MpmProjectServiceApplication { // NOPMD by skull on 8/8/20, 10:02 A
 	 */
 	public static void main(final String[] args) {
 
-		SpringApplication.run(MpmProjectServiceApplication.class, args);
+		SpringApplication.run(MpmMSProjectApplication.class, args);
 	}
 }
