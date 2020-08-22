@@ -59,7 +59,7 @@ class ProjectControllerImplWebTest {
 
 	@BeforeEach
 	void setupTest() {
-		endpoint = String.format("http://localhost:%d/%s/%s", port, contextPath, requestMapping);
+		endpoint = String.format("http://localhost:%d%s/%s", port, contextPath, requestMapping);
 	}
 
 	@Test
