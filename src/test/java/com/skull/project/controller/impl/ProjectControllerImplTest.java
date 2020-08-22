@@ -208,7 +208,6 @@ class ProjectControllerImplTest {
 		String actualMessage = exception.getMessage();
 
 		assertThat(actualMessage).contains(TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION);
-
 	}
 
 	@Test
@@ -225,6 +224,5 @@ class ProjectControllerImplTest {
 		String actualMessage = exception.getMessage();
 
 		assertThat(actualMessage).contains(TEST_PROJECT_INVALID_PROJECT_ID_EXCEPTION);
-
 	}
 }
