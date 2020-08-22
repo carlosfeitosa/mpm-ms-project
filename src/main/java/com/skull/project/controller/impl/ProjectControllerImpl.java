@@ -121,7 +121,6 @@ public class ProjectControllerImpl implements ProjectController { // NOPMD by sk
 	@GetMapping("/{id}")
 	public EntityModel<ProjectDto> getById(final @PathVariable(value = "id") UUID projectId) { // NOPMD by skull on
 																								// 8/8/20, 7:33 PM
-
 		log.info("Getting project by id");
 		log.debug(String.format("Project id: %s", String.valueOf(projectId)));
 
