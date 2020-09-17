@@ -83,7 +83,7 @@ class ProjectControllerImplWebTest {
 				new ParameterizedTypeReference<ResponseProjectList>() {
 				}).getBody();
 
-		assertThat(recoveredProjects.getEmbedded().getProjectDtoList()).isNotEmpty();
+		assertThat(recoveredProjects.getEmbedded().getProjects()).isNotEmpty();
 	}
 
 	@Test
@@ -98,9 +98,9 @@ class ProjectControllerImplWebTest {
 				new ParameterizedTypeReference<ResponseProjectList>() {
 				}).getBody();
 
-		assertThat(recoveredProjects.getEmbedded().getProjectDtoList()).isNotEmpty();
+		assertThat(recoveredProjects.getEmbedded().getProjects()).isNotEmpty();
 
-		ProjectDto expected = recoveredProjects.getEmbedded().getProjectDtoList().get(0);
+		ProjectDto expected = recoveredProjects.getEmbedded().getProjects().get(0);
 
 		response = restTemplate.getForEntity(String.format("%s/%s", endpoint, expected.getId().toString()),
 				String.class);

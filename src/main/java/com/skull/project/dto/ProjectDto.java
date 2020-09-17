@@ -3,6 +3,7 @@ package com.skull.project.dto;
 import java.util.UUID;
 
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.skull.project.enums.ProjectHealthEnum;
 import com.skull.project.enums.ProjectStatusEnum;
@@ -20,6 +21,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Relation(collectionRelation = "projects", itemRelation = "project")
 public class ProjectDto extends RepresentationModel<ProjectDto> {
 
 	/**
