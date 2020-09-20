@@ -69,7 +69,7 @@ class ProjectTest {
 
 		project.setClientInformation(clientInformation);
 
-		project.setContractedHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
+		project.setTotalHours(TEST_PROJECT_TOTAL_CONTRACTED_HOURS);
 		project.setAttentionPoints(TEST_PROJECT_ATTENTION_POINTS);
 		project.setActionPlan(TEST_PROJECT_ACTION_PLAN);
 		project.setType(TEST_PROJECT_TYPE);

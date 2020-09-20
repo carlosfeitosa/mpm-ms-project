@@ -103,10 +103,10 @@ public class Project extends AbstractModel {
 	/**
 	 * Project's total contracted hours.
 	 */
-	@Column(name = "total_contracted_hours", nullable = true)
+	@Column(name = "total_hours", nullable = true)
 	@Getter
 	@Setter
-	private Long contractedHours;
+	private Long totalHours;
 
 	/**
 	 * Project's attention points.
