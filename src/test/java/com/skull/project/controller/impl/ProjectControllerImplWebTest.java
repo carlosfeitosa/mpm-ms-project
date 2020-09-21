@@ -64,7 +64,7 @@ class ProjectControllerImplWebTest {
 
 	@Test
 	@DisplayName("Test if can get 200 response for default endpoint")
-	void greetingShouldReturnDefaultMessage() throws Exception {
+	void testIfCanGet200ForDefaultEndpoint() throws Exception {
 
 		ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
 
