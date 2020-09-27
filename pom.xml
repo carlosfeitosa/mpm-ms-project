@@ -20,6 +20,8 @@
 		<spring-cloud.version>2020.0.0-M3</spring-cloud.version>
 		<modelmapper.version>2.3.8</modelmapper.version>
 		<equalsverifier.version>3.4.1</equalsverifier.version>
+		<swagger.version>3.0.0</swagger.version>
+		<swagger.ui.version>3.0.0</swagger.ui.version>
 	</properties>
 
 	<dependencies>
@@ -70,6 +72,16 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger.ui.version}</version>
 		</dependency>
 
 		<dependency>
